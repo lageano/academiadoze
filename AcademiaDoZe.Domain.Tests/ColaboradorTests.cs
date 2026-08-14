@@ -2,7 +2,7 @@
 using AcademiaDoZe.Domain.Entities;
 using AcademiaDoZe.Domain.Enums;
 
-namespace AcademiaDoZe.Domain.Tests.Entities;
+namespace AcademiaDoZe.Domain.Tests;
 
 public class ColaboradorTests
 {

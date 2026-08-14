@@ -1,7 +1,7 @@
 // gabriel geremias vieira
 using AcademiaDoZe.Domain.ValueObjects;
 
-namespace AcademiaDoZe.Domain.Tests.ValueObjects;
+namespace AcademiaDoZe.Domain.Tests;
 
 public class CepTests
 {

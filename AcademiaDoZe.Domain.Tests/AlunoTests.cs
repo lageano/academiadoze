@@ -1,7 +1,7 @@
 // gabriel geremias vieira
 using AcademiaDoZe.Domain.Entities;
 
-namespace AcademiaDoZe.Domain.Tests.Entities;
+namespace AcademiaDoZe.Domain.Tests;
 
 public class AlunoTests
 {

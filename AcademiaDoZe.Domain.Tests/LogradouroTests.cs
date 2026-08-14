@@ -2,7 +2,7 @@
 using AcademiaDoZe.Domain.Entities;
 using AcademiaDoZe.Domain.Exceptions;
 
-namespace AcademiaDoZe.Domain.Tests.Entities;
+namespace AcademiaDoZe.Domain.Tests;
 
 public class LogradouroTests
 {

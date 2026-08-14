@@ -4,7 +4,7 @@ using AcademiaDoZe.Domain.Enums;
 using AcademiaDoZe.Domain.Exceptions;
 using AcademiaDoZe.Domain.ValueObjects;
 
-namespace AcademiaDoZe.Domain.Tests.Entities;
+namespace AcademiaDoZe.Domain.Tests;
 
 public class MatriculaTests
 {

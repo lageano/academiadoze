@@ -1,7 +1,7 @@
 // gabriel geremias vieira
 using AcademiaDoZe.Domain.Services;
 
-namespace AcademiaDoZe.Domain.Tests.Services;
+namespace AcademiaDoZe.Domain.Tests;
 
 public class NormalizadoServiceTests
 {

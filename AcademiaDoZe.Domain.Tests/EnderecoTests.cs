@@ -2,7 +2,7 @@
 using AcademiaDoZe.Domain.Entities;
 using AcademiaDoZe.Domain.ValueObjects;
 
-namespace AcademiaDoZe.Domain.Tests.ValueObjects;
+namespace AcademiaDoZe.Domain.Tests;
 
 public class EnderecoTests
 {
