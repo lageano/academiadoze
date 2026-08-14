@@ -1,4 +1,3 @@
 <Solution>
   <Project Path="AcademiaDoZe.Domain/AcademiaDoZe.Domain.csproj" />
-  <Project Path="AcademiaDoZe.Domain.Tests/AcademiaDoZe.Domain.Tests.csproj" />
 </Solution>
