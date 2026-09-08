@@ -7,19 +7,26 @@ namespace AcademiaDoZe.Infrastructure.Tests;
 public abstract class TestBase
 {
     // Altere o SGBD alvo dos testes trocando apenas a constante abaixo:
-    private const DatabaseType SelectedDatabaseType = DatabaseType.SqlServer;
+    private const DatabaseType SelectedDatabaseType = DatabaseType.MySql;
 
     protected string ConnectionString { get; }
     protected DatabaseType DatabaseType { get; }
 
-    // Nome do SGBD no formato exigido pelo laboratório para o campo "cidade" do registro de entrega.
-    protected string NomeSgbdParaEntrega => DatabaseType switch
+    // Dados exigidos pela entrega do Laboratório prático.
+    protected const string NomeParaEntrega = "Gabriel";
+    protected const string SobrenomeParaEntrega = "Geremias Vieira";
+
+    // Sigla do SGBD no formato exigido pelo laboratório (usada no nome do logradouro e na senha).
+    protected static string NomeSgbdParaEntrega => SelectedDatabaseType switch
     {
         DatabaseType.SqlServer => "SQLServer",
         DatabaseType.MySql => "MySQL",
         DatabaseType.Sqlite => "SQLite",
-        _ => throw new ArgumentOutOfRangeException(nameof(DatabaseType), DatabaseType, "SGBD não suportado para testes.")
+        _ => throw new ArgumentOutOfRangeException(nameof(SelectedDatabaseType), SelectedDatabaseType, "SGBD não suportado para testes.")
     };
+
+    // A senha deve conter a sigla do SGBD utilizado no momento do teste.
+    protected static string SenhaParaEntrega => $"Senha123{NomeSgbdParaEntrega}";
 
     protected TestBase()
     {
@@ -46,8 +53,31 @@ public abstract class TestBase
     #region Geradores de dados aleatórios
     private static int _counter = 10000;
     protected static string GerarCep() => (80000000 + ((int)(DateTime.UtcNow.Ticks % 8000000)) + Interlocked.Increment(ref _counter)).ToString("D8")[..8];
-    protected static string GerarCpf() => (10000000000L + ((DateTime.UtcNow.Ticks % 80000000000L)) + Interlocked.Increment(ref _counter)).ToString("D11")[..11];
     protected static string GerarEmail() => $"user_{Guid.NewGuid().ToString("N")[..8]}@test.com";
     protected static string GerarTelefone() => (49990000000L + ((DateTime.UtcNow.Ticks % 8000000000L)) + Interlocked.Increment(ref _counter)).ToString("D11")[..11];
+
+    // O Value Object Cpf valida os dígitos verificadores, então geramos os 9 primeiros dígitos e calculamos os 2 finais.
+    protected static string GerarCpf()
+    {
+        var raiz = (100000000L + ((DateTime.UtcNow.Ticks + Interlocked.Increment(ref _counter) + Random.Shared.Next(1, 999999)) % 800000000L)).ToString("D9");
+        var digitos = raiz.Select(c => c - '0').ToList();
+
+        digitos.Add(CalcularDigitoVerificador(digitos, 9));
+        digitos.Add(CalcularDigitoVerificador(digitos, 10));
+
+        return string.Concat(digitos);
+    }
+
+    private static int CalcularDigitoVerificador(IReadOnlyList<int> digitos, int quantidade)
+    {
+        var soma = 0;
+        var peso = quantidade + 1;
+
+        for (var i = 0; i < quantidade; i++)
+            soma += digitos[i] * peso--;
+
+        var resto = soma % 11;
+        return resto < 2 ? 0 : 11 - resto;
+    }
     #endregion
 }
