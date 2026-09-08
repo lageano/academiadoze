@@ -13,6 +13,7 @@ public class Matricula : Entity, IAggregateRoot
     private const int IdadeMaximaExigeLaudo = 16;
 
     public Aluno Aluno { get; private set; }
+    public int AlunoId => Aluno.Id;
     public MatriculaPlano Plano { get; private set; }
     public DateOnly DataInicio { get; private set; }
     public DateOnly DataFim { get; private set; }
