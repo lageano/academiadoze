@@ -76,3 +76,25 @@ CREATE TABLE IF NOT EXISTS tb_acesso (
 );
 CREATE INDEX IF NOT EXISTS ix_tb_acesso_pessoa ON tb_acesso(pessoa_tipo, pessoa_id);
 CREATE INDEX IF NOT EXISTS ix_tb_acesso_data_hora ON tb_acesso(data_hora);
+
+CREATE TABLE IF NOT EXISTS tb_acesso_aluno (
+    id_acesso_aluno INTEGER PRIMARY KEY AUTOINCREMENT,
+    aluno_id INTEGER NOT NULL,
+    data TEXT NOT NULL, -- Data em formato ISO-8601 (YYYY-MM-DD)
+    entrada TEXT NOT NULL, -- Hora em formato HH:MM:SS
+    saida TEXT NULL, -- Hora em formato HH:MM:SS, nulo enquanto o aluno nao sai
+    FOREIGN KEY (aluno_id) REFERENCES tb_aluno(id_aluno) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE INDEX IF NOT EXISTS ix_tb_acesso_aluno_aluno_id ON tb_acesso_aluno(aluno_id);
+CREATE INDEX IF NOT EXISTS ix_tb_acesso_aluno_data ON tb_acesso_aluno(data);
+
+CREATE TABLE IF NOT EXISTS tb_acesso_colaborador (
+    id_acesso_colaborador INTEGER PRIMARY KEY AUTOINCREMENT,
+    colaborador_id INTEGER NOT NULL,
+    data TEXT NOT NULL, -- Data em formato ISO-8601 (YYYY-MM-DD)
+    entrada TEXT NOT NULL, -- Hora em formato HH:MM:SS
+    saida TEXT NULL, -- Hora em formato HH:MM:SS, nulo enquanto o colaborador nao sai
+    FOREIGN KEY (colaborador_id) REFERENCES tb_colaborador(id_colaborador) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE INDEX IF NOT EXISTS ix_tb_acesso_colaborador_colaborador_id ON tb_acesso_colaborador(colaborador_id);
+CREATE INDEX IF NOT EXISTS ix_tb_acesso_colaborador_data ON tb_acesso_colaborador(data);

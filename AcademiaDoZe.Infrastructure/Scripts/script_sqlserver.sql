@@ -99,3 +99,35 @@ BEGIN
     CREATE INDEX Ix_tb_acesso_pessoa ON tb_acesso(pessoa_tipo, pessoa_id);
     CREATE INDEX Ix_tb_acesso_data_hora ON tb_acesso(data_hora);
 END;
+
+IF OBJECT_ID(N'dbo.tb_acesso_aluno', N'U') IS NULL
+BEGIN
+    CREATE TABLE tb_acesso_aluno (
+        id_acesso_aluno INT IDENTITY(1,1) NOT NULL,
+        aluno_id INT NOT NULL,
+        data DATE NOT NULL,
+        entrada TIME(0) NOT NULL,
+        saida TIME(0) NULL,
+        CONSTRAINT PK_tb_acesso_aluno PRIMARY KEY (id_acesso_aluno),
+        CONSTRAINT FK_tb_acesso_aluno_tb_aluno FOREIGN KEY (aluno_id)
+            REFERENCES tb_aluno(id_aluno) ON DELETE CASCADE
+    );
+    CREATE INDEX Ix_tb_acesso_aluno_aluno_id ON tb_acesso_aluno(aluno_id);
+    CREATE INDEX Ix_tb_acesso_aluno_data ON tb_acesso_aluno(data);
+END;
+
+IF OBJECT_ID(N'dbo.tb_acesso_colaborador', N'U') IS NULL
+BEGIN
+    CREATE TABLE tb_acesso_colaborador (
+        id_acesso_colaborador INT IDENTITY(1,1) NOT NULL,
+        colaborador_id INT NOT NULL,
+        data DATE NOT NULL,
+        entrada TIME(0) NOT NULL,
+        saida TIME(0) NULL,
+        CONSTRAINT PK_tb_acesso_colaborador PRIMARY KEY (id_acesso_colaborador),
+        CONSTRAINT FK_tb_acesso_colab_tb_colaborador FOREIGN KEY (colaborador_id)
+            REFERENCES tb_colaborador(id_colaborador) ON DELETE CASCADE
+    );
+    CREATE INDEX Ix_tb_acesso_colab_colaborador_id ON tb_acesso_colaborador(colaborador_id);
+    CREATE INDEX Ix_tb_acesso_colab_data ON tb_acesso_colaborador(data);
+END;

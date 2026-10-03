@@ -4,3 +4,5 @@ obj/
 *.user
 
 .fake
+*.Backup.tmp
+*.SdkResolver.*.proj

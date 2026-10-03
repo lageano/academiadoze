@@ -83,3 +83,29 @@ CREATE TABLE IF NOT EXISTS tb_acesso (
     INDEX ix_tb_acesso_pessoa (pessoa_tipo, pessoa_id),
     INDEX ix_tb_acesso_data_hora (data_hora)
 ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS tb_acesso_aluno (
+    id_acesso_aluno INT AUTO_INCREMENT NOT NULL,
+    aluno_id INT NOT NULL,
+    data DATE NOT NULL,
+    entrada TIME NOT NULL,
+    saida TIME NULL,
+    PRIMARY KEY (id_acesso_aluno),
+    INDEX ix_tb_acesso_aluno_aluno_id (aluno_id),
+    INDEX ix_tb_acesso_aluno_data (data),
+    CONSTRAINT fk_tb_acesso_aluno_tb_aluno FOREIGN KEY (aluno_id)
+        REFERENCES tb_aluno (id_aluno) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS tb_acesso_colaborador (
+    id_acesso_colaborador INT AUTO_INCREMENT NOT NULL,
+    colaborador_id INT NOT NULL,
+    data DATE NOT NULL,
+    entrada TIME NOT NULL,
+    saida TIME NULL,
+    PRIMARY KEY (id_acesso_colaborador),
+    INDEX ix_tb_acesso_colaborador_colaborador_id (colaborador_id),
+    INDEX ix_tb_acesso_colaborador_data (data),
+    CONSTRAINT fk_tb_acesso_colab_tb_colaborador FOREIGN KEY (colaborador_id)
+        REFERENCES tb_colaborador (id_colaborador) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
