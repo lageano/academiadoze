@@ -20,6 +20,7 @@
         <converters:NomeParaCorConverter x:Key="NomeParaCor" />
         <converters:SemFotoConverter x:Key="SemFoto" />
         <converters:ModoSelecionadoCorConverter x:Key="ModoCor" />
+        <converters:ModoSelecionadoTextoConverter x:Key="ModoTexto" />
     </ContentPage.Resources>
 
     <!-- Duas colunas no computador; no celular a movimentação do dia desce para a linha de baixo -->
@@ -45,13 +46,16 @@
                                 Command="{Binding TrocarModoCommand}" CommandParameter="aluno"
                                 BackgroundColor="{Binding ModoAluno, Converter={StaticResource ModoCor}}"
                                 IsEnabled="{Binding ModoAluno, Converter={StaticResource InvertedBool}}"
-                                TextColor="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}"
+                                TextColor="{Binding ModoAluno, Converter={StaticResource ModoTexto}}"
                                 BorderColor="{AppThemeBinding Light={StaticResource Hairline}, Dark={StaticResource HairlineDark}}"
                                 BorderWidth="1" FontAttributes="Bold" HeightRequest="42" />
                         <Button Grid.Column="1" Text="Colaborador" WidthRequest="150" CornerRadius="8" Margin="8,0,0,0"
                                 Command="{Binding TrocarModoCommand}" CommandParameter="colaborador"
                                 IsEnabled="{Binding ModoAluno}"
-                                Style="{StaticResource BotaoSecundario}" />
+                                BackgroundColor="{Binding ModoAluno, Converter={StaticResource ModoCor}, ConverterParameter=inverso}"
+                                TextColor="{Binding ModoAluno, Converter={StaticResource ModoTexto}, ConverterParameter=inverso}"
+                                BorderColor="{AppThemeBinding Light={StaticResource Hairline}, Dark={StaticResource HairlineDark}}"
+                                BorderWidth="1" FontAttributes="Bold" HeightRequest="42" />
                     </Grid>
                     <Label Text="{Binding ModoAtualTexto}" FontSize="11"
                            TextColor="{AppThemeBinding Light={StaticResource Roxo}, Dark={StaticResource Dourado}}" />

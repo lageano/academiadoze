@@ -69,10 +69,33 @@ public sealed class AutorizadoToColorConverter : IValueConverter
 // Destaca o segmento ativo da alternância Aluno / Colaborador
 public sealed class ModoSelecionadoCorConverter : IValueConverter
 {
+    // O parametro "inverso" atende o botao do outro modo, que usa o mesmo booleano
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-        => value is bool selecionado && selecionado
-            ? Color.FromArgb("#6D4AFF")
-            : Colors.Transparent;
+    {
+        var selecionado = value is bool b && b;
+        if (parameter as string == "inverso") selecionado = !selecionado;
+
+        return selecionado ? Color.FromArgb("#6D4AFF") : Colors.Transparent;
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        => throw new NotSupportedException();
+}
+
+// O botão selecionado fica roxo, então o texto precisa ser branco nos dois temas.
+public sealed class ModoSelecionadoTextoConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        var selecionado = value is bool b && b;
+        if (parameter as string == "inverso") selecionado = !selecionado;
+
+        if (selecionado) return Colors.White;
+
+        return Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark
+            ? Colors.White
+            : Color.FromArgb("#12101C");
+    }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         => throw new NotSupportedException();
