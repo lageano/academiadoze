@@ -3,34 +3,74 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Color x:Key="SurfaceLight">#FFFFFF</Color>
-    <Color x:Key="SurfaceDark">#1F1B2E</Color>
-    <Color x:Key="SurfaceAltLight">#F4F2FA</Color>
-    <Color x:Key="SurfaceAltDark">#17142A</Color>
-    <Color x:Key="SuccessColor">#1B5E20</Color>
-    <Color x:Key="DangerColor">#7F1D1D</Color>
-    <Color x:Key="WarningColor">#8A6100</Color>
-    <Color x:Key="AccentYellow">#FFC107</Color>
+    <!-- Paleta -->
+    <Color x:Key="Ink">#12101C</Color>
+    <Color x:Key="InkSoft">#5B5770</Color>
+    <Color x:Key="Canvas">#FAF9FD</Color>
+    <Color x:Key="CanvasDark">#111018</Color>
+    <Color x:Key="Panel">#FFFFFF</Color>
+    <Color x:Key="PanelDark">#1B1926</Color>
+    <Color x:Key="Hairline">#E6E2F0</Color>
+    <Color x:Key="HairlineDark">#2C2940</Color>
+    <Color x:Key="Roxo">#6D4AFF</Color>
+    <Color x:Key="RoxoFundo">#2B1D63</Color>
+    <Color x:Key="Dourado">#FFC107</Color>
+    <Color x:Key="Verde">#1F8A4C</Color>
+    <Color x:Key="Vermelho">#C0392B</Color>
 
-    <!-- Cartão usado nas listagens e seções de formulário -->
-    <Style x:Key="CardBorder" TargetType="Border">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" />
-        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
-        <Setter Property="StrokeThickness" Value="1" />
-        <Setter Property="Padding" Value="16" />
-        <Setter Property="StrokeShape">
-            <Setter.Value>
-                <RoundRectangle CornerRadius="14" />
-            </Setter.Value>
-        </Setter>
+    <!-- Tipografia: a hierarquia vem do tamanho e do peso, não de caixas -->
+    <Style x:Key="TituloTela" TargetType="Label">
+        <Setter Property="FontSize" Value="26" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}" />
     </Style>
 
-    <!-- Selo arredondado, por exemplo o tipo de plano ou o vínculo -->
-    <Style x:Key="BadgeBorder" TargetType="Border">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
-        <Setter Property="Padding" Value="10,3" />
-        <Setter Property="HorizontalOptions" Value="Start" />
-        <Setter Property="StrokeThickness" Value="0" />
+    <Style x:Key="LinhaApoio" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
+    </Style>
+
+    <!-- Rótulo de seção em caixa alta, com tracking largo -->
+    <Style x:Key="RotuloSecao" TargetType="Label">
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CharacterSpacing" Value="1.6" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
+    </Style>
+
+    <Style x:Key="NomePrincipal" TargetType="Label">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}" />
+    </Style>
+
+    <Style x:Key="MetaDado" TargetType="Label">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
+    </Style>
+
+    <Style x:Key="RotuloCampo" TargetType="Label">
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CharacterSpacing" Value="1.2" />
+        <Setter Property="Margin" Value="0,14,0,4" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
+    </Style>
+
+    <!-- Linha fina de separação entre itens, no lugar de empilhar bordas -->
+    <Style x:Key="Separador" TargetType="BoxView">
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Hairline}, Dark={StaticResource HairlineDark}}" />
+    </Style>
+
+    <!-- Painel usado só onde realmente agrupa conteúdo -->
+    <Style x:Key="Painel" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Hairline}, Dark={StaticResource HairlineDark}}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="20" />
         <Setter Property="StrokeShape">
             <Setter.Value>
                 <RoundRectangle CornerRadius="10" />
@@ -38,64 +78,105 @@
         </Setter>
     </Style>
 
-    <Style x:Key="BadgeLabel" TargetType="Label">
-        <Setter Property="TextColor" Value="White" />
-        <Setter Property="FontSize" Value="11" />
-        <Setter Property="FontAttributes" Value="Bold" />
+    <!-- Avatar circular com iniciais, usado quando não há foto -->
+    <Style x:Key="Avatar" TargetType="Border">
+        <Setter Property="WidthRequest" Value="44" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <Ellipse />
+            </Setter.Value>
+        </Setter>
     </Style>
 
-    <!-- Título de seção centralizado, no padrão das telas do projeto -->
-    <Style x:Key="SectionTitle" TargetType="Label">
-        <Setter Property="FontSize" Value="20" />
+    <Style x:Key="AvatarIniciais" TargetType="Label">
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="15" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="HorizontalOptions" Value="Center" />
-        <Setter Property="Margin" Value="0,10,0,2" />
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 
-    <Style x:Key="SectionSubtitle" TargetType="Label">
-        <Setter Property="FontSize" Value="12" />
-        <Setter Property="HorizontalOptions" Value="Center" />
-        <Setter Property="HorizontalTextAlignment" Value="Center" />
-        <Setter Property="Margin" Value="0,0,0,10" />
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
-    </Style>
-
-    <Style x:Key="FieldLabel" TargetType="Label">
-        <Setter Property="FontSize" Value="12" />
-        <Setter Property="Margin" Value="0,8,0,2" />
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" />
-    </Style>
-
-    <!-- Botão de ação primária, com cantos bem arredondados -->
-    <Style x:Key="PrimaryPillButton" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
-        <Setter Property="TextColor" Value="White" />
-        <Setter Property="CornerRadius" Value="22" />
-        <Setter Property="HeightRequest" Value="46" />
-        <Setter Property="FontAttributes" Value="Bold" />
-    </Style>
-
-    <Style x:Key="GhostPillButton" TargetType="Button">
+    <!-- Etiqueta discreta: contorno em vez de preenchimento -->
+    <Style x:Key="Etiqueta" TargetType="Border">
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
-        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray500}}" />
-        <Setter Property="BorderWidth" Value="1" />
-        <Setter Property="CornerRadius" Value="22" />
-        <Setter Property="HeightRequest" Value="46" />
+        <Setter Property="Stroke" Value="{StaticResource Roxo}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="8,2" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="4" />
+            </Setter.Value>
+        </Setter>
     </Style>
 
-    <!-- Botão flutuante de inclusão no canto inferior direito -->
-    <Style x:Key="FabButton" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+    <Style x:Key="EtiquetaTexto" TargetType="Label">
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CharacterSpacing" Value="0.8" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Roxo}, Dark={StaticResource Dourado}}" />
+    </Style>
+
+    <!-- Botões: cantos discretos, não pílulas -->
+    <Style x:Key="BotaoPrimario" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Roxo}" />
         <Setter Property="TextColor" Value="White" />
-        <Setter Property="FontSize" Value="26" />
-        <Setter Property="WidthRequest" Value="58" />
-        <Setter Property="HeightRequest" Value="58" />
-        <Setter Property="CornerRadius" Value="29" />
-        <Setter Property="HorizontalOptions" Value="End" />
-        <Setter Property="VerticalOptions" Value="End" />
-        <Setter Property="Margin" Value="0,0,20,20" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="BotaoSecundario" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}" />
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Hairline}, Dark={StaticResource HairlineDark}}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style x:Key="BotaoTexto" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource Roxo}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HeightRequest" Value="32" />
+        <Setter Property="Padding" Value="8,0" />
+    </Style>
+
+    <Style x:Key="BotaoNovo" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Roxo}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="Padding" Value="18,0" />
+    </Style>
+
+    <Style TargetType="Entry">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}" />
+    </Style>
+
+    <!-- Barra do Shell discreta: cada tela ja tem o proprio cabecalho -->
+    <Style TargetType="Shell" ApplyToDerivedTypes="True">
+        <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}" />
+        <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}" />
+        <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
+        <Setter Property="Shell.DisabledColor" Value="{AppThemeBinding Light={StaticResource Hairline}, Dark={StaticResource HairlineDark}}" />
+        <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
+        <Setter Property="Shell.NavBarHasShadow" Value="False" />
+        <Setter Property="Shell.FlyoutBackgroundColor" Value="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Roxo}" />
+        <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource Roxo}" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
     </Style>
 
 </ResourceDictionary>

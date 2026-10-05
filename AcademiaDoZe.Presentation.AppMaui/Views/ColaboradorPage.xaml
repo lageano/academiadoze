@@ -7,144 +7,157 @@
              xmlns:converters="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Converters"
              xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
              x:DataType="vm:ColaboradorViewModel"
-             Title="{Binding Title}">
+             Title=""
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource CanvasDark}}">
 
     <ContentPage.Resources>
         <converters:FotoToImageSourceConverter x:Key="FotoToImageSource" />
         <converters:DateOnlyToDateTimeConverter x:Key="DateOnlyToDateTime" />
-        <converters:EnumDisplayConverter x:Key="EnumDisplay" />
+        <converters:IniciaisConverter x:Key="Iniciais" />
+        <converters:NomeParaCorConverter x:Key="NomeParaCor" />
+        <converters:SemFotoConverter x:Key="SemFoto" />
     </ContentPage.Resources>
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="12" MaximumWidthRequest="860">
+    <Grid RowDefinitions="Auto,1,*,1,Auto">
 
-            <Label Text="Dados Pessoais" Style="{StaticResource SectionTitle}" />
+        <VerticalStackLayout Grid.Row="0" Padding="36,26,36,20" Spacing="3"
+                             BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
+            <Label Text="{Binding Title}" Style="{StaticResource TituloTela}" />
+            <Label Text="Dados cadastrais, vínculo funcional e credenciais de acesso." Style="{StaticResource LinhaApoio}" />
+        </VerticalStackLayout>
 
-            <Border Style="{StaticResource CardBorder}">
-                <VerticalStackLayout Spacing="2">
+        <BoxView Grid.Row="1" Style="{StaticResource Separador}" />
 
-                    <Label Text="Nome completo" Style="{StaticResource FieldLabel}" />
+        <ScrollView Grid.Row="2">
+            <Grid ColumnDefinitions="*,280" ColumnSpacing="40" Padding="36,26"
+                  MaximumWidthRequest="1100" HorizontalOptions="Start">
+
+                <VerticalStackLayout Grid.Column="0" Spacing="0" MaximumWidthRequest="720" HorizontalOptions="Start">
+
+                    <Label Text="DADOS PESSOAIS" Style="{StaticResource RotuloSecao}" />
+
+                    <Label Text="NOME COMPLETO" Style="{StaticResource RotuloCampo}" />
                     <Entry Text="{Binding Colaborador.Nome}" Placeholder="Nome completo do colaborador" />
 
-                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
                         <VerticalStackLayout Grid.Column="0">
-                            <Label Text="CPF" Style="{StaticResource FieldLabel}" />
+                            <Label Text="CPF" Style="{StaticResource RotuloCampo}" />
                             <Entry Text="{Binding Colaborador.Cpf}" Placeholder="Somente números" Keyboard="Numeric" MaxLength="14" />
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="1">
-                            <Label Text="Data de nascimento" Style="{StaticResource FieldLabel}" />
+                            <Label Text="NASCIMENTO" Style="{StaticResource RotuloCampo}" />
                             <DatePicker Date="{Binding Colaborador.DataNascimento, Converter={StaticResource DateOnlyToDateTime}}" Format="dd/MM/yyyy" />
                         </VerticalStackLayout>
                     </Grid>
 
-                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
                         <VerticalStackLayout Grid.Column="0">
-                            <Label Text="Telefone" Style="{StaticResource FieldLabel}" />
+                            <Label Text="TELEFONE" Style="{StaticResource RotuloCampo}" />
                             <Entry Text="{Binding Colaborador.Telefone}" Placeholder="DDD + número" Keyboard="Telephone" MaxLength="15" />
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="1">
-                            <Label Text="E-mail" Style="{StaticResource FieldLabel}" />
+                            <Label Text="E-MAIL" Style="{StaticResource RotuloCampo}" />
                             <Entry Text="{Binding Colaborador.Email}" Placeholder="email@exemplo.com" Keyboard="Email" />
                         </VerticalStackLayout>
                     </Grid>
 
-                </VerticalStackLayout>
-            </Border>
+                    <BoxView Style="{StaticResource Separador}" Margin="0,26" />
 
-            <Label Text="Dados Funcionais" Style="{StaticResource SectionTitle}" />
+                    <Label Text="VÍNCULO FUNCIONAL" Style="{StaticResource RotuloSecao}" />
 
-            <Border Style="{StaticResource CardBorder}">
-                <VerticalStackLayout Spacing="2">
-
-                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="20">
                         <VerticalStackLayout Grid.Column="0">
-                            <Label Text="Data de admissão" Style="{StaticResource FieldLabel}" />
+                            <Label Text="ADMISSÃO" Style="{StaticResource RotuloCampo}" />
                             <DatePicker Date="{Binding Colaborador.DataAdmissao, Converter={StaticResource DateOnlyToDateTime}}" Format="dd/MM/yyyy" />
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="1">
-                            <Label Text="Tipo" Style="{StaticResource FieldLabel}" />
+                            <Label Text="TIPO" Style="{StaticResource RotuloCampo}" />
                             <Picker ItemsSource="{Binding Tipos}" SelectedItem="{Binding Colaborador.Tipo, Mode=TwoWay}" />
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="2">
-                            <Label Text="Vínculo" Style="{StaticResource FieldLabel}" />
+                            <Label Text="VÍNCULO" Style="{StaticResource RotuloCampo}" />
                             <Picker ItemsSource="{Binding Vinculos}" SelectedItem="{Binding Colaborador.Vinculo, Mode=TwoWay}" />
                         </VerticalStackLayout>
                     </Grid>
 
-                    <Label Text="Colaborador do tipo Administrador deve ter vínculo CLT."
-                           FontSize="10" Margin="0,6,0,0"
-                           TextColor="{StaticResource WarningColor}" />
+                    <Label Text="Administrador deve ter vínculo CLT. Jornada diária: 8h para CLT, 6h para estágio."
+                           FontSize="11" Margin="0,10,0,0"
+                           TextColor="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
 
-                </VerticalStackLayout>
-            </Border>
+                    <BoxView Style="{StaticResource Separador}" Margin="0,26" />
 
-            <Label Text="Endereço" Style="{StaticResource SectionTitle}" />
+                    <Label Text="ENDEREÇO" Style="{StaticResource RotuloSecao}" />
 
-            <Border Style="{StaticResource CardBorder}">
-                <VerticalStackLayout Spacing="2">
-
-                    <Label Text="Logradouro" Style="{StaticResource FieldLabel}" />
-                    <Picker ItemsSource="{Binding Logradouros}"
-                            ItemDisplayBinding="{Binding Nome}"
+                    <Label Text="LOGRADOURO" Style="{StaticResource RotuloCampo}" />
+                    <Picker ItemsSource="{Binding Logradouros}" ItemDisplayBinding="{Binding Nome}"
                             SelectedItem="{Binding LogradouroSelecionado, Mode=TwoWay}"
                             Title="Selecione o logradouro..." />
 
-                    <Grid ColumnDefinitions="130,*" ColumnSpacing="10">
+                    <Grid ColumnDefinitions="140,*" ColumnSpacing="20">
                         <VerticalStackLayout Grid.Column="0">
-                            <Label Text="Número" Style="{StaticResource FieldLabel}" />
+                            <Label Text="NÚMERO" Style="{StaticResource RotuloCampo}" />
                             <Entry Text="{Binding Colaborador.Numero}" Placeholder="Nº" />
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="1">
-                            <Label Text="Complemento (opcional)" Style="{StaticResource FieldLabel}" />
+                            <Label Text="COMPLEMENTO (OPCIONAL)" Style="{StaticResource RotuloCampo}" />
                             <Entry Text="{Binding Colaborador.Complemento}" Placeholder="Sala, bloco..." />
                         </VerticalStackLayout>
                     </Grid>
 
-                </VerticalStackLayout>
-            </Border>
+                    <BoxView Style="{StaticResource Separador}" Margin="0,26" />
 
-            <Label Text="Acesso e Foto" Style="{StaticResource SectionTitle}" />
+                    <Label Text="ACESSO" Style="{StaticResource RotuloSecao}" />
 
-            <Border Style="{StaticResource CardBorder}">
-                <VerticalStackLayout Spacing="2">
-
-                    <Label Text="Senha" Style="{StaticResource FieldLabel}" />
+                    <Label Text="SENHA" Style="{StaticResource RotuloCampo}" />
                     <Entry Text="{Binding Colaborador.Senha}" IsPassword="True"
                            Placeholder="Mínimo 6 caracteres, com letras e números" />
-                    <Label Text="Na edição, deixe em branco para manter a senha atual."
-                           FontSize="10" IsVisible="{Binding IsEditMode}"
-                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                    <Label Text="Deixe em branco para manter a senha atual." FontSize="11" Margin="0,6,0,0"
+                           IsVisible="{Binding IsEditMode}"
+                           TextColor="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
 
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Margin="0,10,0,0">
-                        <Border Grid.Column="0" WidthRequest="90" HeightRequest="90" StrokeThickness="1"
-                                Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}">
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                                       HorizontalOptions="Start" Margin="0,24,0,0" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="14">
+                    <Label Text="FOTO" Style="{StaticResource RotuloSecao}" />
+
+                    <Grid WidthRequest="150" HeightRequest="150" HorizontalOptions="Start">
+                        <Border WidthRequest="150" HeightRequest="150" StrokeThickness="0"
+                                BackgroundColor="{Binding Colaborador.Nome, Converter={StaticResource NomeParaCor}}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Label Text="{Binding Colaborador.Nome, Converter={StaticResource Iniciais}}"
+                                   Style="{StaticResource AvatarIniciais}" FontSize="46" />
+                        </Border>
+                        <Border WidthRequest="150" HeightRequest="150" StrokeThickness="0">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="12" />
                             </Border.StrokeShape>
                             <Image Source="{Binding Colaborador.Foto, Converter={StaticResource FotoToImageSource}}"
-                                   Aspect="AspectFill" WidthRequest="90" HeightRequest="90" />
+                                   Aspect="AspectFill" WidthRequest="150" HeightRequest="150" />
                         </Border>
-
-                        <VerticalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
-                            <Button Text="Selecionar Foto"
-                                    Style="{StaticResource PrimaryPillButton}"
-                                    Command="{Binding SelecionarFotoCommand}" />
-                        </VerticalStackLayout>
                     </Grid>
 
+                    <Button Text="Selecionar foto" Style="{StaticResource BotaoSecundario}"
+                            WidthRequest="150" HorizontalOptions="Start"
+                            Command="{Binding SelecionarFotoCommand}" />
                 </VerticalStackLayout>
-            </Border>
 
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8">
-                <Button Grid.Column="0" Text="{helpers:Translate strCancelar}"
-                        Style="{StaticResource GhostPillButton}" Command="{Binding CancelarCommand}" />
-                <Button Grid.Column="1" Text="{helpers:Translate strSalvar}"
-                        Style="{StaticResource PrimaryPillButton}"
-                        IsEnabled="{Binding IsNotBusy}" Command="{Binding SalvarCommand}" />
             </Grid>
+        </ScrollView>
 
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+        <BoxView Grid.Row="3" Style="{StaticResource Separador}" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+        <Grid Grid.Row="4" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12" Padding="36,16"
+              BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
+            <Button Grid.Column="1" Text="{helpers:Translate strCancelar}" WidthRequest="130"
+                    Style="{StaticResource BotaoSecundario}" Command="{Binding CancelarCommand}" />
+            <Button Grid.Column="2" Text="{helpers:Translate strSalvar}" WidthRequest="150"
+                    Style="{StaticResource BotaoPrimario}"
+                    IsEnabled="{Binding IsNotBusy}" Command="{Binding SalvarCommand}" />
+        </Grid>
+    </Grid>
 </ContentPage>

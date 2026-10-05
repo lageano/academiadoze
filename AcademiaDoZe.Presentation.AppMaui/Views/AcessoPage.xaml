@@ -7,152 +7,176 @@
              xmlns:converters="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Converters"
              xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
              x:DataType="vm:AcessoViewModel"
-             Title="{helpers:Translate strAcesso}">
+             Title=""
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource CanvasDark}}">
 
     <ContentPage.Resources>
         <converters:FotoToImageSourceConverter x:Key="FotoToImageSource" />
         <converters:AutorizadoToColorConverter x:Key="AutorizadoToColor" />
         <converters:PresencaToTextConverter x:Key="PresencaToText" />
         <converters:InvertedBoolConverter x:Key="InvertedBool" />
+        <converters:IniciaisConverter x:Key="Iniciais" />
+        <converters:NomeParaCorConverter x:Key="NomeParaCor" />
+        <converters:SemFotoConverter x:Key="SemFoto" />
+        <converters:ModoSelecionadoCorConverter x:Key="ModoCor" />
     </ContentPage.Resources>
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="14" MaximumWidthRequest="900">
+    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,360">
 
-            <Label Text="Controle de Acesso / Catraca" Style="{StaticResource SectionTitle}" />
-            <Label Text="Selecione se o acesso é de um Aluno ou Colaborador:" Style="{StaticResource SectionSubtitle}" />
+        <!-- Cabeçalho -->
+        <VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="2" Padding="36,28,36,22" Spacing="4"
+                             BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
+            <Label Text="Controle de Acesso" Style="{StaticResource TituloTela}" />
+            <Label Text="Registre a entrada e a saída de alunos e colaboradores." Style="{StaticResource LinhaApoio}" />
+        </VerticalStackLayout>
 
-            <!-- Seleção do modo -->
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
-                <Button Grid.Column="0" Text="Aluno"
-                        Command="{Binding TrocarModoCommand}" CommandParameter="aluno"
-                        Style="{StaticResource PrimaryPillButton}"
-                        IsEnabled="{Binding ModoAluno, Converter={StaticResource InvertedBool}}" />
-                <Button Grid.Column="1" Text="Colaborador"
-                        Command="{Binding TrocarModoCommand}" CommandParameter="colaborador"
-                        Style="{StaticResource PrimaryPillButton}"
-                        IsEnabled="{Binding ModoAluno}" />
-            </Grid>
+        <!-- Coluna principal: identificação e liberação -->
+        <ScrollView Grid.Row="1" Grid.Column="0">
+            <VerticalStackLayout Padding="36,28,28,28" Spacing="26">
 
-            <Label Text="{Binding ModoAtualTexto}"
-                   HorizontalOptions="Center"
-                   FontSize="11"
-                   FontAttributes="Bold"
-                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource AccentYellow}}" />
+                <!-- Alternância de modo em segmentos encostados -->
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="TIPO DE ACESSO" Style="{StaticResource RotuloSecao}" />
+                    <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="0" HorizontalOptions="Start">
+                        <Button Grid.Column="0" Text="Aluno" WidthRequest="150" CornerRadius="8"
+                                Command="{Binding TrocarModoCommand}" CommandParameter="aluno"
+                                BackgroundColor="{Binding ModoAluno, Converter={StaticResource ModoCor}}"
+                                IsEnabled="{Binding ModoAluno, Converter={StaticResource InvertedBool}}"
+                                TextColor="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}"
+                                BorderColor="{AppThemeBinding Light={StaticResource Hairline}, Dark={StaticResource HairlineDark}}"
+                                BorderWidth="1" FontAttributes="Bold" HeightRequest="42" />
+                        <Button Grid.Column="1" Text="Colaborador" WidthRequest="150" CornerRadius="8" Margin="8,0,0,0"
+                                Command="{Binding TrocarModoCommand}" CommandParameter="colaborador"
+                                IsEnabled="{Binding ModoAluno}"
+                                Style="{StaticResource BotaoSecundario}" />
+                    </Grid>
+                    <Label Text="{Binding ModoAtualTexto}" FontSize="11"
+                           TextColor="{AppThemeBinding Light={StaticResource Roxo}, Dark={StaticResource Dourado}}" />
+                </VerticalStackLayout>
 
-            <!-- Localizar pessoa -->
-            <Border Style="{StaticResource CardBorder}">
-                <VerticalStackLayout Spacing="6">
-                    <Label Text="Localizar Pessoa" Style="{StaticResource SectionTitle}" FontSize="16" />
-                    <SearchBar Placeholder="Digite o nome ou o CPF..."
-                               Text="{Binding TextoBusca}"
-                               SearchCommand="{Binding BuscarPessoasCommand}" />
+                <BoxView Style="{StaticResource Separador}" />
 
-                    <Label Text="{Binding RotuloSelecao}" Style="{StaticResource FieldLabel}" />
-                    <Picker ItemsSource="{Binding Pessoas}"
-                            ItemDisplayBinding="{Binding Nome}"
+                <!-- Busca -->
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="LOCALIZAR PESSOA" Style="{StaticResource RotuloSecao}" />
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                        <Entry Grid.Column="0" Placeholder="Nome ou CPF" Text="{Binding TextoBusca}" />
+                        <Button Grid.Column="1" Text="Buscar" Style="{StaticResource BotaoPrimario}"
+                                WidthRequest="110" Command="{Binding BuscarPessoasCommand}" />
+                    </Grid>
+                    <Label Text="{Binding RotuloSelecao}" Style="{StaticResource RotuloCampo}" Margin="0,6,0,2" />
+                    <Picker ItemsSource="{Binding Pessoas}" ItemDisplayBinding="{Binding Nome}"
                             SelectedItem="{Binding PessoaSelecionada, Mode=TwoWay}"
                             Title="Toque para escolher..." />
                 </VerticalStackLayout>
-            </Border>
 
-            <!-- Identificação e liberação -->
-            <Border Style="{StaticResource CardBorder}" IsVisible="{Binding TemPessoaSelecionada}">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Identificação e Liberação" Style="{StaticResource SectionTitle}" FontSize="16" />
+                <!-- Pessoa identificada -->
+                <VerticalStackLayout Spacing="14" IsVisible="{Binding TemPessoaSelecionada}">
+                    <BoxView Style="{StaticResource Separador}" />
 
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                        <Border Grid.Column="0" WidthRequest="64" HeightRequest="64" StrokeThickness="0">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="32" />
-                            </Border.StrokeShape>
-                            <Image Source="{Binding PessoaSelecionada.Foto, Converter={StaticResource FotoToImageSource}}"
-                                   Aspect="AspectFill"
-                                   WidthRequest="64"
-                                   HeightRequest="64" />
-                        </Border>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="16">
 
-                        <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
-                            <Label Text="{Binding PessoaSelecionada.Nome}" FontAttributes="Bold" FontSize="16" />
-                            <Label Text="{Binding PessoaSelecionada.CpfFormatado, StringFormat='CPF: {0}'}"
-                                   FontSize="11"
-                                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
-                            <Border Style="{StaticResource BadgeBorder}">
-                                <Label Text="{Binding EstaNaAcademia, Converter={StaticResource PresencaToText}}"
-                                       Style="{StaticResource BadgeLabel}" />
+                        <!-- Avatar: foto quando existe, iniciais quando não -->
+                        <Grid Grid.Column="0" WidthRequest="60" HeightRequest="60" VerticalOptions="Center">
+                            <Border Style="{StaticResource Avatar}" WidthRequest="60" HeightRequest="60"
+                                    BackgroundColor="{Binding PessoaSelecionada.Nome, Converter={StaticResource NomeParaCor}}">
+                                <Label Text="{Binding PessoaSelecionada.Nome, Converter={StaticResource Iniciais}}"
+                                       Style="{StaticResource AvatarIniciais}" FontSize="20" />
                             </Border>
+                            <Border Style="{StaticResource Avatar}" WidthRequest="60" HeightRequest="60">
+                                <Image Source="{Binding PessoaSelecionada.Foto, Converter={StaticResource FotoToImageSource}}"
+                                       Aspect="AspectFill" WidthRequest="60" HeightRequest="60" />
+                            </Border>
+                        </Grid>
+
+                        <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                            <Label Text="{Binding PessoaSelecionada.Nome}" FontSize="19" FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}" />
+                            <Label Text="{Binding PessoaSelecionada.CpfFormatado}" Style="{StaticResource MetaDado}" />
                         </VerticalStackLayout>
+
+                        <Border Grid.Column="2" Style="{StaticResource Etiqueta}" VerticalOptions="Center">
+                            <Label Text="{Binding EstaNaAcademia, Converter={StaticResource PresencaToText}}"
+                                   Style="{StaticResource EtiquetaTexto}" />
+                        </Border>
                     </Grid>
 
                     <Button Text="{Binding TextoBotaoAcesso}"
                             Command="{Binding RegistrarAcessoCommand}"
                             IsEnabled="{Binding IsNotBusy}"
-                            Style="{StaticResource PrimaryPillButton}" />
+                            Style="{StaticResource BotaoPrimario}"
+                            HeightRequest="52" FontSize="15" />
                 </VerticalStackLayout>
-            </Border>
 
-            <!-- Resultado da operação -->
-            <Border IsVisible="{Binding TemResultado}"
-                    BackgroundColor="{Binding ResultadoAutorizado, Converter={StaticResource AutorizadoToColor}}"
-                    Padding="14"
-                    StrokeThickness="0">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="12" />
-                </Border.StrokeShape>
-                <VerticalStackLayout Spacing="2">
-                    <Label Text="{Binding TituloResultado}" TextColor="White" FontAttributes="Bold" FontSize="14" />
-                    <Label Text="{Binding MensagemResultado}" TextColor="#E8F5E9" FontSize="12" />
+                <!-- Resultado: faixa lateral colorida, sem caixa preenchida -->
+                <Grid IsVisible="{Binding TemResultado}" ColumnDefinitions="4,*" ColumnSpacing="14">
+                    <BoxView Grid.Column="0" VerticalOptions="Fill"
+                             Color="{Binding ResultadoAutorizado, Converter={StaticResource AutorizadoToColor}}" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="3" Padding="0,4">
+                        <Label Text="{Binding TituloResultado}" FontSize="14" FontAttributes="Bold"
+                               TextColor="{Binding ResultadoAutorizado, Converter={StaticResource AutorizadoToColor}}" />
+                        <Label Text="{Binding MensagemResultado}" Style="{StaticResource MetaDado}" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Start" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Coluna lateral: movimentação do dia -->
+        <Grid Grid.Row="1" Grid.Column="1" RowDefinitions="Auto,1,*"
+              BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
+
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Padding="22,22,14,14">
+                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                    <Label Text="MOVIMENTAÇÃO DE HOJE" Style="{StaticResource RotuloSecao}" />
+                    <Label Text="{Binding AcessosHoje.Count, StringFormat='{0} registro(s)'}" Style="{StaticResource MetaDado}" />
                 </VerticalStackLayout>
-            </Border>
+                <Button Grid.Column="1" Text="{helpers:Translate strAtualizar}"
+                        Style="{StaticResource BotaoTexto}"
+                        Command="{Binding CarregarAcessosDeHojeCommand}" />
+            </Grid>
 
-            <!-- Acessos registrados hoje -->
-            <Border Style="{StaticResource CardBorder}">
-                <VerticalStackLayout Spacing="8">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0" Text="Acessos Registrados Hoje" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
-                        <Button Grid.Column="1" Text="{helpers:Translate strAtualizar}"
-                                Command="{Binding CarregarAcessosDeHojeCommand}"
-                                Style="{StaticResource GhostPillButton}"
-                                HeightRequest="34"
-                                FontSize="11"
-                                Padding="12,0" />
-                    </Grid>
+            <BoxView Grid.Row="1" Style="{StaticResource Separador}" />
 
-                    <CollectionView ItemsSource="{Binding AcessosHoje}" HeightRequest="240">
-                        <CollectionView.EmptyView>
-                            <Label Text="Nenhum acesso registrado hoje."
-                                   HorizontalOptions="Center"
-                                   Margin="0,24"
-                                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
-                        </CollectionView.EmptyView>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="vm:AcessoHojeItem">
-                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10" Padding="0,8">
-                                    <Border Grid.Column="0" WidthRequest="10" HeightRequest="10" StrokeThickness="0"
-                                            VerticalOptions="Center"
-                                            BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource AccentYellow}}">
-                                        <Border.StrokeShape>
-                                            <RoundRectangle CornerRadius="5" />
-                                        </Border.StrokeShape>
-                                    </Border>
+            <CollectionView Grid.Row="2" ItemsSource="{Binding AcessosHoje}">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout Padding="22,44" Spacing="6">
+                        <Label Text="Sem movimentação" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
+                        <Label Text="Os acessos registrados hoje aparecem aqui."
+                               Style="{StaticResource MetaDado}" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
 
-                                    <VerticalStackLayout Grid.Column="1" Spacing="1">
-                                        <Label Text="{Binding Nome}" FontAttributes="Bold" FontSize="13" />
-                                        <Label Text="{Binding Descricao}" FontSize="11"
-                                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
-                                    </VerticalStackLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:AcessoHojeItem">
+                        <VerticalStackLayout>
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" Padding="22,13">
+                                <Border Grid.Column="0" Style="{StaticResource Avatar}" WidthRequest="34" HeightRequest="34"
+                                        BackgroundColor="{Binding Nome, Converter={StaticResource NomeParaCor}}">
+                                    <Label Text="{Binding Nome, Converter={StaticResource Iniciais}}"
+                                           Style="{StaticResource AvatarIniciais}" FontSize="12" />
+                                </Border>
 
-                                    <Label Grid.Column="2" Text="{Binding Hora}" FontSize="11" VerticalOptions="Center"
-                                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </VerticalStackLayout>
-            </Border>
+                                <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                                    <Label Text="{Binding Nome}" FontSize="13" FontAttributes="Bold" LineBreakMode="TailTruncation"
+                                           TextColor="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}" />
+                                    <Label Text="{Binding Descricao}" FontSize="11" LineBreakMode="TailTruncation"
+                                           TextColor="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
+                                </VerticalStackLayout>
 
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+                                <Label Grid.Column="2" Text="{Binding Hora}" FontSize="12" VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
+                            </Grid>
+                            <BoxView Style="{StaticResource Separador}" Margin="22,0" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
 
-        </VerticalStackLayout>
-    </ScrollView>
+    </Grid>
 </ContentPage>

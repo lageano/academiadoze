@@ -6,54 +6,78 @@
              xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
              xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
              x:DataType="vm:LogradouroViewModel"
-             Title="{Binding Title}">
+             Title=""
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource CanvasDark}}">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="12" MaximumWidthRequest="800">
+    <Grid RowDefinitions="Auto,1,*,1,Auto">
 
-            <Label Text="Dados do Logradouro" Style="{StaticResource SectionTitle}" />
-
-            <Border Style="{StaticResource CardBorder}">
-                <VerticalStackLayout Spacing="2">
-
-                    <Label Text="CEP" Style="{StaticResource FieldLabel}" />
-                    <Entry Text="{Binding Logradouro.Cep}" Placeholder="Somente números" Keyboard="Numeric" MaxLength="9" />
-
-                    <Label Text="Nome do Logradouro" Style="{StaticResource FieldLabel}" />
-                    <Entry Text="{Binding Logradouro.Nome}" Placeholder="Rua, Avenida, Travessa..." />
-
-                    <Label Text="Bairro" Style="{StaticResource FieldLabel}" />
-                    <Entry Text="{Binding Logradouro.Bairro}" Placeholder="Bairro" />
-
-                    <Grid ColumnDefinitions="*,120" ColumnSpacing="10">
-                        <VerticalStackLayout Grid.Column="0">
-                            <Label Text="Cidade" Style="{StaticResource FieldLabel}" />
-                            <Entry Text="{Binding Logradouro.Cidade}" Placeholder="Cidade" />
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Column="1">
-                            <Label Text="Estado" Style="{StaticResource FieldLabel}" />
-                            <Entry Text="{Binding Logradouro.Estado}" Placeholder="UF" MaxLength="2" />
-                        </VerticalStackLayout>
-                    </Grid>
-
-                    <Label Text="País" Style="{StaticResource FieldLabel}" />
-                    <Entry Text="{Binding Logradouro.Pais}" Placeholder="País" />
-
-                </VerticalStackLayout>
-            </Border>
-
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8">
-                <Button Grid.Column="0" Text="{helpers:Translate strCancelar}"
-                        Style="{StaticResource GhostPillButton}"
-                        Command="{Binding CancelarCommand}" />
-                <Button Grid.Column="1" Text="{helpers:Translate strSalvar}"
-                        Style="{StaticResource PrimaryPillButton}"
-                        IsEnabled="{Binding IsNotBusy}"
-                        Command="{Binding SalvarCommand}" />
-            </Grid>
-
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
-
+        <VerticalStackLayout Grid.Row="0" Padding="36,26,36,20" Spacing="3"
+                             BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
+            <Label Text="{Binding Title}" Style="{StaticResource TituloTela}" />
+            <Label Text="Endereço base reutilizado por alunos e colaboradores." Style="{StaticResource LinhaApoio}" />
         </VerticalStackLayout>
-    </ScrollView>
+
+        <BoxView Grid.Row="1" Style="{StaticResource Separador}" />
+
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Padding="36,26" Spacing="0" MaximumWidthRequest="760" HorizontalOptions="Start">
+
+                <Label Text="IDENTIFICAÇÃO" Style="{StaticResource RotuloSecao}" />
+
+                <Grid ColumnDefinitions="200,*" ColumnSpacing="20">
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Text="CEP" Style="{StaticResource RotuloCampo}" />
+                        <Entry Text="{Binding Logradouro.Cep}" Placeholder="00000000" Keyboard="Numeric" MaxLength="9" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1">
+                        <Label Text="NOME DO LOGRADOURO" Style="{StaticResource RotuloCampo}" />
+                        <Entry Text="{Binding Logradouro.Nome}" Placeholder="Rua, Avenida, Travessa..." />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <BoxView Style="{StaticResource Separador}" Margin="0,26" />
+
+                <Label Text="LOCALIZAÇÃO" Style="{StaticResource RotuloSecao}" />
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Text="BAIRRO" Style="{StaticResource RotuloCampo}" />
+                        <Entry Text="{Binding Logradouro.Bairro}" Placeholder="Bairro" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1">
+                        <Label Text="CIDADE" Style="{StaticResource RotuloCampo}" />
+                        <Entry Text="{Binding Logradouro.Cidade}" Placeholder="Cidade" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <Grid ColumnDefinitions="120,*" ColumnSpacing="20">
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Text="ESTADO" Style="{StaticResource RotuloCampo}" />
+                        <Entry Text="{Binding Logradouro.Estado}" Placeholder="UF" MaxLength="2" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1">
+                        <Label Text="PAÍS" Style="{StaticResource RotuloCampo}" />
+                        <Entry Text="{Binding Logradouro.Pais}" Placeholder="País" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                                   HorizontalOptions="Start" Margin="0,24,0,0" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <BoxView Grid.Row="3" Style="{StaticResource Separador}" />
+
+        <!-- Barra de ações fixa no rodapé -->
+        <Grid Grid.Row="4" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12" Padding="36,16"
+              BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
+            <Button Grid.Column="1" Text="{helpers:Translate strCancelar}" WidthRequest="130"
+                    Style="{StaticResource BotaoSecundario}" Command="{Binding CancelarCommand}" />
+            <Button Grid.Column="2" Text="{helpers:Translate strSalvar}" WidthRequest="150"
+                    Style="{StaticResource BotaoPrimario}"
+                    IsEnabled="{Binding IsNotBusy}" Command="{Binding SalvarCommand}" />
+        </Grid>
+    </Grid>
 </ContentPage>

@@ -6,86 +6,176 @@
              xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
              xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
              x:DataType="vm:DashboardViewModel"
-             Title="{helpers:Translate strDashboard}">
+             Title=""
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource CanvasDark}}">
+
+    <ContentPage.Resources>
+        <!-- Atalho do painel: círculo colorido + rótulo embaixo -->
+        <Style x:Key="AtalhoCirculo" TargetType="Border">
+            <Setter Property="WidthRequest" Value="56" />
+            <Setter Property="HeightRequest" Value="56" />
+            <Setter Property="StrokeThickness" Value="0" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="StrokeShape">
+                <Setter.Value>
+                    <Ellipse />
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="AtalhoGlifo" TargetType="Label">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+        <Style x:Key="AtalhoTexto" TargetType="Label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="Margin" Value="0,8,0,0" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}" />
+        </Style>
+    </ContentPage.Resources>
 
     <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="18" MaximumWidthRequest="1100">
+        <VerticalStackLayout Spacing="0">
 
-            <!-- Logo da aplicação, contendo o nome do autor -->
-            <Border Style="{StaticResource CardBorder}" Padding="0">
+            <!-- Faixa de abertura com a logo da aplicação -->
+            <Grid HeightRequest="172">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="{StaticResource Roxo}" Offset="0.0" />
+                        <GradientStop Color="{StaticResource RoxoFundo}" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Grid.Background>
+
                 <Image Source="logo_academia.png"
                        Aspect="AspectFit"
-                       HeightRequest="190"
-                       HorizontalOptions="Fill" />
-            </Border>
-
-            <Label Text="{helpers:Translate strBemVindo}" Style="{StaticResource SectionTitle}" />
-            <Label Text="{helpers:Translate strDashboardDescricao}" Style="{StaticResource SectionSubtitle}" />
-
-            <!-- Resumo numérico -->
-            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="14">
-                <Border Grid.Column="0" Style="{StaticResource CardBorder}">
-                    <VerticalStackLayout Spacing="2">
-                        <Label Text="{Binding TotalAlunos}" FontSize="32" FontAttributes="Bold"
-                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource AccentYellow}}" />
-                        <Label Text="{helpers:Translate strAluno}" FontSize="12" />
-                    </VerticalStackLayout>
-                </Border>
-
-                <Border Grid.Column="1" Style="{StaticResource CardBorder}">
-                    <VerticalStackLayout Spacing="2">
-                        <Label Text="{Binding TotalColaboradores}" FontSize="32" FontAttributes="Bold"
-                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource AccentYellow}}" />
-                        <Label Text="{helpers:Translate strColaborador}" FontSize="12" />
-                    </VerticalStackLayout>
-                </Border>
-
-                <Border Grid.Column="2" Style="{StaticResource CardBorder}">
-                    <VerticalStackLayout Spacing="2">
-                        <Label Text="{Binding TotalMatriculasAtivas}" FontSize="32" FontAttributes="Bold"
-                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource AccentYellow}}" />
-                        <Label Text="{helpers:Translate strMatricula}" FontSize="12" />
-                    </VerticalStackLayout>
-                </Border>
+                       HeightRequest="118"
+                       HorizontalOptions="Start"
+                       Margin="40,0" />
             </Grid>
 
-            <!-- Atalhos para os módulos -->
-            <Border Style="{StaticResource CardBorder}">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="{helpers:Translate strDashboard}" FontAttributes="Bold" FontSize="15" />
-                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
-                        <Button Grid.Row="0" Grid.Column="0" Text="{helpers:Translate strAcesso}"
-                                Style="{StaticResource PrimaryPillButton}"
-                                Command="{Binding NavegarCommand}" CommandParameter="acesso" />
-                        <Button Grid.Row="0" Grid.Column="1" Text="{helpers:Translate strAluno}"
-                                Style="{StaticResource GhostPillButton}"
-                                Command="{Binding NavegarCommand}" CommandParameter="alunos" />
-                        <Button Grid.Row="1" Grid.Column="0" Text="{helpers:Translate strColaborador}"
-                                Style="{StaticResource GhostPillButton}"
-                                Command="{Binding NavegarCommand}" CommandParameter="colaboradores" />
-                        <Button Grid.Row="1" Grid.Column="1" Text="{helpers:Translate strMatricula}"
-                                Style="{StaticResource GhostPillButton}"
-                                Command="{Binding NavegarCommand}" CommandParameter="matriculas" />
-                        <Button Grid.Row="2" Grid.Column="0" Text="{helpers:Translate strLogradouro}"
-                                Style="{StaticResource GhostPillButton}"
-                                Command="{Binding NavegarCommand}" CommandParameter="logradouros" />
-                        <Button Grid.Row="2" Grid.Column="1" Text="{helpers:Translate strAtualizar}"
-                                Style="{StaticResource GhostPillButton}"
-                                Command="{Binding CarregarResumoCommand}" />
-                    </Grid>
-                </VerticalStackLayout>
-            </Border>
+            <!-- Números em destaque, separados por linhas finas -->
+            <Grid ColumnDefinitions="190,1,190,1,190"
+                  ColumnSpacing="28"
+                  Padding="40,30,40,30"
+                  BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
 
-            <!-- Troca de idioma em tempo de execução (i18n) -->
-            <Border Style="{StaticResource CardBorder}">
-                <VerticalStackLayout Spacing="6">
-                    <Label Text="{helpers:Translate strIdioma}" FontAttributes="Bold" FontSize="15" />
-                    <Picker ItemsSource="{Binding Idiomas}"
+                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                    <Label Text="{Binding TotalAlunos}" FontSize="44" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}" />
+                    <Label Text="{helpers:Translate strAluno}" Style="{StaticResource RotuloSecao}" />
+                </VerticalStackLayout>
+
+                <BoxView Grid.Column="1" WidthRequest="1" VerticalOptions="Fill"
+                         Color="{AppThemeBinding Light={StaticResource Hairline}, Dark={StaticResource HairlineDark}}" />
+
+                <VerticalStackLayout Grid.Column="2" Spacing="2">
+                    <Label Text="{Binding TotalColaboradores}" FontSize="44" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}" />
+                    <Label Text="{helpers:Translate strColaborador}" Style="{StaticResource RotuloSecao}" />
+                </VerticalStackLayout>
+
+                <BoxView Grid.Column="3" WidthRequest="1" VerticalOptions="Fill"
+                         Color="{AppThemeBinding Light={StaticResource Hairline}, Dark={StaticResource HairlineDark}}" />
+
+                <VerticalStackLayout Grid.Column="4" Spacing="2">
+                    <Label FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding TotalMatriculasAtivas}" FontSize="44" />
+                                <Span Text=" ativas" FontSize="15" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label Text="{helpers:Translate strMatricula}" Style="{StaticResource RotuloSecao}" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <BoxView Style="{StaticResource Separador}" />
+
+            <!-- Atalhos dos módulos -->
+            <VerticalStackLayout Padding="40,30,40,10" Spacing="22">
+
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="{helpers:Translate strBemVindo}" Style="{StaticResource TituloTela}" />
+                    <Label Text="{helpers:Translate strDashboardDescricao}" Style="{StaticResource LinhaApoio}" />
+                </VerticalStackLayout>
+
+                <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnSpacing="34"
+                      HorizontalOptions="Start">
+
+                    <VerticalStackLayout Grid.Column="0">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="acesso" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border Style="{StaticResource AtalhoCirculo}" BackgroundColor="{StaticResource Roxo}">
+                            <Label Text="CA" Style="{StaticResource AtalhoGlifo}" />
+                        </Border>
+                        <Label Text="{helpers:Translate strAcesso}" Style="{StaticResource AtalhoTexto}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="alunos" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border Style="{StaticResource AtalhoCirculo}" BackgroundColor="#1F8A4C">
+                            <Label Text="AL" Style="{StaticResource AtalhoGlifo}" />
+                        </Border>
+                        <Label Text="{helpers:Translate strAluno}" Style="{StaticResource AtalhoTexto}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="2">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="colaboradores" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border Style="{StaticResource AtalhoCirculo}" BackgroundColor="#0E7490">
+                            <Label Text="CO" Style="{StaticResource AtalhoGlifo}" />
+                        </Border>
+                        <Label Text="{helpers:Translate strColaborador}" Style="{StaticResource AtalhoTexto}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="3">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="matriculas" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border Style="{StaticResource AtalhoCirculo}" BackgroundColor="#B45309">
+                            <Label Text="MA" Style="{StaticResource AtalhoGlifo}" />
+                        </Border>
+                        <Label Text="{helpers:Translate strMatricula}" Style="{StaticResource AtalhoTexto}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="4">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="logradouros" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border Style="{StaticResource AtalhoCirculo}" BackgroundColor="#9D174D">
+                            <Label Text="LG" Style="{StaticResource AtalhoGlifo}" />
+                        </Border>
+                        <Label Text="{helpers:Translate strLogradouro}" Style="{StaticResource AtalhoTexto}" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <BoxView Style="{StaticResource Separador}" Margin="0,8" />
+
+                <!-- Idioma e atualização -->
+                <Grid ColumnDefinitions="Auto,220,*,Auto" ColumnSpacing="12" Margin="0,0,0,20">
+                    <Label Grid.Column="0" Text="{helpers:Translate strIdioma}"
+                           Style="{StaticResource RotuloSecao}" VerticalOptions="Center" />
+                    <Picker Grid.Column="1" ItemsSource="{Binding Idiomas}"
                             SelectedItem="{Binding IdiomaSelecionado, Mode=TwoWay}" />
-                </VerticalStackLayout>
-            </Border>
+                    <Button Grid.Column="3" Text="{helpers:Translate strAtualizar}"
+                            Style="{StaticResource BotaoSecundario}"
+                            Padding="18,0"
+                            Command="{Binding CarregarResumoCommand}" />
+                </Grid>
 
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+            </VerticalStackLayout>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Margin="0,0,0,20" />
 
         </VerticalStackLayout>
     </ScrollView>

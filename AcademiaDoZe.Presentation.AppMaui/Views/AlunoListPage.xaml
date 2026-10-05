@@ -9,92 +9,113 @@
              xmlns:converters="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Converters"
              xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
              x:DataType="vm:AlunoListViewModel"
-             Title="{helpers:Translate strAluno}">
+             Title=""
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource CanvasDark}}">
 
     <ContentPage.Resources>
         <converters:FotoToImageSourceConverter x:Key="FotoToImageSource" />
+        <converters:IniciaisConverter x:Key="Iniciais" />
+        <converters:NomeParaCorConverter x:Key="NomeParaCor" />
+        <converters:CpfFormatadoConverter x:Key="CpfFormatado" />
+        <converters:TelefoneFormatadoConverter x:Key="TelefoneFormatado" />
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,Auto,1,*">
 
-        <Grid Grid.Row="0" ColumnDefinitions="140,*" ColumnSpacing="10" Padding="16,14">
-            <Picker Grid.Column="0" ItemsSource="{Binding TiposFiltro}" SelectedItem="{Binding FiltroSelecionado}" />
-            <SearchBar Grid.Column="1" Placeholder="Digite o valor..."
-                       Text="{Binding TextoBusca}" SearchCommand="{Binding BuscarCommand}" />
+        <!-- Cabeçalho com contagem e ação principal -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Padding="36,26,36,16"
+              BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
+            <VerticalStackLayout Grid.Column="0" Spacing="3">
+                <Label Text="{helpers:Translate strAluno}" Style="{StaticResource TituloTela}" />
+                <Label Text="{Binding TotalRegistros, StringFormat='{0} cadastrado(s)'}" Style="{StaticResource LinhaApoio}" />
+            </VerticalStackLayout>
+            <Button Grid.Column="1" Text="Novo aluno" Style="{StaticResource BotaoNovo}"
+                    VerticalOptions="Center" Command="{Binding AdicionarCommand}" />
         </Grid>
 
-        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding AtualizarCommand}">
+        <!-- Filtro -->
+        <Grid Grid.Row="1" ColumnDefinitions="150,*,Auto" ColumnSpacing="10" Padding="36,0,36,18"
+              BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
+            <Picker Grid.Column="0" ItemsSource="{Binding TiposFiltro}" SelectedItem="{Binding FiltroSelecionado}" />
+            <Entry Grid.Column="1" Placeholder="Digite o valor..." Text="{Binding TextoBusca}"
+                   ReturnCommand="{Binding BuscarCommand}" />
+            <Button Grid.Column="2" Text="{helpers:Translate strBuscar}" Style="{StaticResource BotaoSecundario}"
+                    Padding="20,0" Command="{Binding BuscarCommand}" />
+        </Grid>
+
+        <BoxView Grid.Row="2" Style="{StaticResource Separador}" />
+
+        <!-- Linhas -->
+        <RefreshView Grid.Row="3" IsRefreshing="{Binding IsRefreshing}" Command="{Binding AtualizarCommand}">
             <CollectionView ItemsSource="{Binding Alunos}">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="12" VerticalItemSpacing="12" />
-                </CollectionView.ItemsLayout>
 
                 <CollectionView.EmptyView>
-                    <Label Text="Nenhum aluno encontrado." HorizontalOptions="Center" Margin="0,40"
-                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                    <VerticalStackLayout Padding="36,70" Spacing="8">
+                        <Label Text="Nenhum aluno encontrado" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
+                        <Label Text="Ajuste o filtro acima ou cadastre o primeiro aluno."
+                               Style="{StaticResource MetaDado}" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
                 </CollectionView.EmptyView>
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="dto:AlunoDto">
-                        <SwipeView>
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem Text="Editar" BackgroundColor="{StaticResource Primary}"
-                                               Command="{Binding BindingContext.EditarCommand, Source={x:Reference PaginaAlunos}}"
-                                               CommandParameter="{Binding .}" />
-                                    <SwipeItem Text="Excluir" BackgroundColor="{StaticResource DangerColor}"
-                                               Command="{Binding BindingContext.ExcluirCommand, Source={x:Reference PaginaAlunos}}"
-                                               CommandParameter="{Binding .}" />
-                                </SwipeItems>
-                            </SwipeView.RightItems>
+                        <VerticalStackLayout>
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Editar" BackgroundColor="{StaticResource Roxo}"
+                                                   Command="{Binding BindingContext.EditarCommand, Source={x:Reference PaginaAlunos}}"
+                                                   CommandParameter="{Binding .}" />
+                                        <SwipeItem Text="Excluir" BackgroundColor="{StaticResource Vermelho}"
+                                                   Command="{Binding BindingContext.ExcluirCommand, Source={x:Reference PaginaAlunos}}"
+                                                   CommandParameter="{Binding .}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
 
-                            <Border Style="{StaticResource CardBorder}" Margin="16,0">
-                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
-                                    <VerticalStackLayout Grid.Column="0" Spacing="3">
-                                        <Label Text="{Binding Nome}" FontAttributes="Bold" FontSize="15" LineBreakMode="TailTruncation" />
+                                <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="24" Padding="36,14">
 
-                                        <Label FontSize="11" LineBreakMode="TailTruncation"
-                                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="CPF: " FontAttributes="Bold" />
-                                                    <Span Text="{Binding Cpf}" />
-                                                    <Span Text="  •  Nasc: " />
-                                                    <Span Text="{Binding DataNascimento, StringFormat='{0:dd/MM/yyyy}'}" />
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
+                                    <!-- Avatar com foto ou iniciais -->
+                                    <Grid Grid.Column="0" WidthRequest="44" HeightRequest="44" VerticalOptions="Center">
+                                        <Border Style="{StaticResource Avatar}"
+                                                BackgroundColor="{Binding Nome, Converter={StaticResource NomeParaCor}}">
+                                            <Label Text="{Binding Nome, Converter={StaticResource Iniciais}}"
+                                                   Style="{StaticResource AvatarIniciais}" />
+                                        </Border>
+                                        <Border Style="{StaticResource Avatar}">
+                                            <Image Source="{Binding Foto, Converter={StaticResource FotoToImageSource}}"
+                                                   Aspect="AspectFill" WidthRequest="44" HeightRequest="44" />
+                                        </Border>
+                                    </Grid>
 
-                                        <Label Text="{Binding Email}" FontSize="11" LineBreakMode="TailTruncation"
-                                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
-                                        <Label Text="{Binding Telefone}" FontSize="11"
-                                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
-
-                                        <Button Text="{helpers:Translate strEditar}"
-                                                Style="{StaticResource GhostPillButton}"
-                                                HeightRequest="34" FontSize="11" Margin="0,6,0,0"
-                                                Command="{Binding BindingContext.EditarCommand, Source={x:Reference PaginaAlunos}}"
-                                                CommandParameter="{Binding .}" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                        <Label Text="{Binding Nome}" Style="{StaticResource NomePrincipal}" />
+                                        <Label Text="{Binding Email}" Style="{StaticResource MetaDado}" />
                                     </VerticalStackLayout>
 
-                                    <Border Grid.Column="1" WidthRequest="60" HeightRequest="60"
-                                            StrokeThickness="0" VerticalOptions="Start">
-                                        <Border.StrokeShape>
-                                            <RoundRectangle CornerRadius="30" />
-                                        </Border.StrokeShape>
-                                        <Image Source="{Binding Foto, Converter={StaticResource FotoToImageSource}}"
-                                               Aspect="AspectFill" WidthRequest="60" HeightRequest="60" />
-                                    </Border>
+                                    <VerticalStackLayout Grid.Column="2" Spacing="2" VerticalOptions="Center"
+                                                         HorizontalOptions="End">
+                                        <Label Text="{Binding Cpf, Converter={StaticResource CpfFormatado}}"
+                                               Style="{StaticResource MetaDado}" HorizontalTextAlignment="End" />
+                                        <Label Text="{Binding Telefone, Converter={StaticResource TelefoneFormatado}}"
+                                               Style="{StaticResource MetaDado}" HorizontalTextAlignment="End" />
+                                    </VerticalStackLayout>
+
+                                    <Button Grid.Column="3" Text="{helpers:Translate strEditar}"
+                                            Style="{StaticResource BotaoTexto}" VerticalOptions="Center"
+                                            Command="{Binding BindingContext.EditarCommand, Source={x:Reference PaginaAlunos}}"
+                                            CommandParameter="{Binding .}" />
                                 </Grid>
-                            </Border>
-                        </SwipeView>
+                            </SwipeView>
+
+                            <BoxView Style="{StaticResource Separador}" Margin="36,0" />
+                        </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
 
-        <Button Grid.Row="1" Text="+" Style="{StaticResource FabButton}" Command="{Binding AdicionarCommand}" />
-
-        <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" VerticalOptions="Center" />
+        <ActivityIndicator Grid.Row="3" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" VerticalOptions="Center" />
     </Grid>
 </ContentPage>

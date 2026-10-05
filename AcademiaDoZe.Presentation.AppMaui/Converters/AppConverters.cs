@@ -66,6 +66,18 @@ public sealed class AutorizadoToColorConverter : IValueConverter
         => throw new NotSupportedException();
 }
 
+// Destaca o segmento ativo da alternância Aluno / Colaborador
+public sealed class ModoSelecionadoCorConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        => value is bool selecionado && selecionado
+            ? Color.FromArgb("#6D4AFF")
+            : Colors.Transparent;
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        => throw new NotSupportedException();
+}
+
 // Texto e cor do selo "dentro/fora da academia"
 public sealed class PresencaToTextConverter : IValueConverter
 {

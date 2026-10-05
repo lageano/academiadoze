@@ -10,20 +10,23 @@
     FlyoutWidth="260">
 
     <Shell.FlyoutHeader>
-        <Grid BackgroundColor="{StaticResource Primary}" HeightRequest="150" Padding="20,24">
-            <VerticalStackLayout Spacing="2" VerticalOptions="Center">
-                <Image Source="logo_academia.png"
-                       HeightRequest="56"
-                       HorizontalOptions="Start"
-                       Aspect="AspectFit" />
+        <Grid HeightRequest="140" Padding="22,26">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="{StaticResource Roxo}" Offset="0.0" />
+                    <GradientStop Color="{StaticResource RoxoFundo}" Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <VerticalStackLayout Spacing="3" VerticalOptions="End">
                 <Label Text="{helpers:Translate strTitulo}"
                        TextColor="White"
-                       FontSize="20"
-                       FontAttributes="Bold"
-                       Margin="0,8,0,0" />
+                       FontSize="21"
+                       FontAttributes="Bold" />
                 <Label Text="{helpers:Translate strSubTitulo}"
-                       TextColor="#E4DCFB"
-                       FontSize="12" />
+                       TextColor="#CFC2FF"
+                       FontSize="11"
+                       CharacterSpacing="1.2" />
             </VerticalStackLayout>
         </Grid>
     </Shell.FlyoutHeader>
