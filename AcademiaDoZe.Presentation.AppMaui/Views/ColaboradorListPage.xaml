@@ -10,7 +10,7 @@
              xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
              x:DataType="vm:ColaboradorListViewModel"
              Title=""
-             Shell.NavBarIsVisible="False"
+             Shell.NavBarIsVisible="{OnPlatform Default=True, WinUI=False}"
              BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource CanvasDark}}">
 
     <ContentPage.Resources>
@@ -23,7 +23,7 @@
 
     <Grid RowDefinitions="Auto,Auto,1,*">
 
-        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Padding="36,26,36,16"
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Padding="{OnIdiom Phone='20,18,20,12', Default='36,26,36,16'}"
               BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
             <VerticalStackLayout Grid.Column="0" Spacing="3">
                 <Label Text="{helpers:Translate strColaborador}" Style="{StaticResource TituloTela}" />
@@ -33,7 +33,7 @@
                     VerticalOptions="Center" Command="{Binding AdicionarCommand}" />
         </Grid>
 
-        <Grid Grid.Row="1" ColumnDefinitions="150,*,Auto" ColumnSpacing="10" Padding="36,0,36,18"
+        <Grid Grid.Row="1" ColumnDefinitions="{OnIdiom Phone='110,*,Auto', Default='150,*,Auto'}" ColumnSpacing="10" Padding="{OnIdiom Phone='20,0,20,14', Default='36,0,36,18'}"
               BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
             <Picker Grid.Column="0" ItemsSource="{Binding TiposFiltro}" SelectedItem="{Binding FiltroSelecionado}" />
             <Entry Grid.Column="1" Placeholder="Digite o valor..." Text="{Binding TextoBusca}"
@@ -48,7 +48,7 @@
             <CollectionView ItemsSource="{Binding Colaboradores}">
 
                 <CollectionView.EmptyView>
-                    <VerticalStackLayout Padding="36,70" Spacing="8">
+                    <VerticalStackLayout Padding="{OnIdiom Phone='20,50', Default='36,70'}" Spacing="8">
                         <Label Text="Nenhum colaborador encontrado" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"
                                TextColor="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
                         <Label Text="Ajuste o filtro acima ou cadastre o primeiro colaborador."
@@ -71,7 +71,7 @@
                                     </SwipeItems>
                                 </SwipeView.RightItems>
 
-                                <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto" ColumnSpacing="24" Padding="36,14">
+                                <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto" ColumnSpacing="{OnIdiom Phone=10, Default=24}" Padding="{OnIdiom Phone='20,12', Default='36,14'}">
 
                                     <Grid Grid.Column="0" WidthRequest="44" HeightRequest="44" VerticalOptions="Center">
                                         <Border Style="{StaticResource Avatar}"
@@ -90,12 +90,14 @@
                                         <Label Text="{Binding Email}" Style="{StaticResource MetaDado}" />
                                     </VerticalStackLayout>
 
-                                    <VerticalStackLayout Grid.Column="2" Spacing="2" VerticalOptions="Center" HorizontalOptions="End">
+                                    <VerticalStackLayout Grid.Column="2" Spacing="2" VerticalOptions="Center" HorizontalOptions="End"
+                                                         IsVisible="{OnIdiom Phone=False, Default=True}">
                                         <Label Text="{Binding Cpf, Converter={StaticResource CpfFormatado}}" Style="{StaticResource MetaDado}" HorizontalTextAlignment="End" />
                                         <Label Text="{Binding DataAdmissao, StringFormat='Desde {0:MM/yyyy}'}" Style="{StaticResource MetaDado}" HorizontalTextAlignment="End" />
                                     </VerticalStackLayout>
 
-                                    <HorizontalStackLayout Grid.Column="3" Spacing="6" VerticalOptions="Center">
+                                    <HorizontalStackLayout Grid.Column="3" Spacing="6" VerticalOptions="Center"
+                                                           IsVisible="{OnIdiom Phone=False, Default=True}">
                                         <Border Style="{StaticResource Etiqueta}">
                                             <Label Text="{Binding Tipo, Converter={StaticResource EnumDisplay}}" Style="{StaticResource EtiquetaTexto}" />
                                         </Border>
@@ -112,7 +114,7 @@
                                 </Grid>
                             </SwipeView>
 
-                            <BoxView Style="{StaticResource Separador}" Margin="36,0" />
+                            <BoxView Style="{StaticResource Separador}" Margin="{OnIdiom Phone='20,0', Default='36,0'}" />
                         </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

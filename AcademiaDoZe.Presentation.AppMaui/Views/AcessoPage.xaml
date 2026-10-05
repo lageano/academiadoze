@@ -8,7 +8,7 @@
              xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
              x:DataType="vm:AcessoViewModel"
              Title=""
-             Shell.NavBarIsVisible="False"
+             Shell.NavBarIsVisible="{OnPlatform Default=True, WinUI=False}"
              BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource CanvasDark}}">
 
     <ContentPage.Resources>
@@ -22,10 +22,12 @@
         <converters:ModoSelecionadoCorConverter x:Key="ModoCor" />
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,360">
+    <!-- Duas colunas no computador; no celular a movimentação do dia desce para a linha de baixo -->
+    <Grid RowDefinitions="{OnIdiom Phone='Auto,1.7*,*', Default='Auto,*,0'}"
+          ColumnDefinitions="{OnIdiom Phone='*,0', Default='*,360'}">
 
         <!-- Cabeçalho -->
-        <VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="2" Padding="36,28,36,22" Spacing="4"
+        <VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="2" Padding="{OnIdiom Phone='20,20,20,16', Default='36,28,36,22'}" Spacing="4"
                              BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
             <Label Text="Controle de Acesso" Style="{StaticResource TituloTela}" />
             <Label Text="Registre a entrada e a saída de alunos e colaboradores." Style="{StaticResource LinhaApoio}" />
@@ -33,7 +35,7 @@
 
         <!-- Coluna principal: identificação e liberação -->
         <ScrollView Grid.Row="1" Grid.Column="0">
-            <VerticalStackLayout Padding="36,28,28,28" Spacing="26">
+            <VerticalStackLayout Padding="{OnIdiom Phone='20,22', Default='36,28,28,28'}" Spacing="26">
 
                 <!-- Alternância de modo em segmentos encostados -->
                 <VerticalStackLayout Spacing="10">
@@ -125,8 +127,9 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Coluna lateral: movimentação do dia -->
-        <Grid Grid.Row="1" Grid.Column="1" RowDefinitions="Auto,1,*"
+        <!-- Movimentação do dia: coluna lateral no computador, bloco inferior no celular -->
+        <Grid Grid.Row="{OnIdiom Phone=2, Default=1}" Grid.Column="{OnIdiom Phone=0, Default=1}"
+              RowDefinitions="Auto,1,*"
               BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
 
             <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Padding="22,22,14,14">

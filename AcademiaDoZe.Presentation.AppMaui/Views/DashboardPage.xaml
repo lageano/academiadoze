@@ -7,7 +7,7 @@
              xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
              x:DataType="vm:DashboardViewModel"
              Title=""
-             Shell.NavBarIsVisible="False"
+             Shell.NavBarIsVisible="{OnPlatform Default=True, WinUI=False}"
              BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource CanvasDark}}">
 
     <ContentPage.Resources>
@@ -42,7 +42,7 @@
         <VerticalStackLayout Spacing="0">
 
             <!-- Faixa de abertura com a logo da aplicação -->
-            <Grid HeightRequest="172">
+            <Grid HeightRequest="{OnIdiom Phone=130, Default=172}">
                 <Grid.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Color="{StaticResource Roxo}" Offset="0.0" />
@@ -52,16 +52,18 @@
 
                 <Image Source="logo_academia.png"
                        Aspect="AspectFit"
-                       HeightRequest="118"
-                       HorizontalOptions="Start"
-                       Margin="40,0" />
+                       HeightRequest="{OnIdiom Phone=96, Default=118}"
+                       HorizontalOptions="{OnIdiom Phone=Center, Default=Start}"
+                       Margin="{OnIdiom Phone='20,0', Default='40,0'}" />
             </Grid>
 
-            <!-- Números em destaque, separados por linhas finas -->
-            <Grid ColumnDefinitions="190,1,190,1,190"
-                  ColumnSpacing="28"
-                  Padding="40,30,40,30"
-                  BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
+            <!-- Números em destaque, separados por linhas finas.
+                 Em telas estreitas a faixa rola na horizontal em vez de cortar os números. -->
+            <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
+            <Grid ColumnDefinitions="{OnIdiom Phone='140,1,140,1,140', Default='190,1,190,1,190'}"
+                  ColumnSpacing="{OnIdiom Phone=20, Default=28}"
+                  Padding="{OnIdiom Phone='20,22', Default='40,30'}">
 
                 <VerticalStackLayout Grid.Column="0" Spacing="2">
                     <Label Text="{Binding TotalAlunos}" FontSize="44" FontAttributes="Bold"
@@ -94,18 +96,22 @@
                     <Label Text="{helpers:Translate strMatricula}" Style="{StaticResource RotuloSecao}" />
                 </VerticalStackLayout>
             </Grid>
+            </ScrollView>
 
             <BoxView Style="{StaticResource Separador}" />
 
             <!-- Atalhos dos módulos -->
-            <VerticalStackLayout Padding="40,30,40,10" Spacing="22">
+            <VerticalStackLayout Padding="{OnIdiom Phone='20,24,20,10', Default='40,30,40,10'}" Spacing="22">
 
                 <VerticalStackLayout Spacing="4">
                     <Label Text="{helpers:Translate strBemVindo}" Style="{StaticResource TituloTela}" />
                     <Label Text="{helpers:Translate strDashboardDescricao}" Style="{StaticResource LinhaApoio}" />
                 </VerticalStackLayout>
 
-                <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnSpacing="34"
+                <!-- No celular a fileira de atalhos rola na horizontal -->
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto"
+                      ColumnSpacing="{OnIdiom Phone=22, Default=34}"
                       HorizontalOptions="Start">
 
                     <VerticalStackLayout Grid.Column="0">
@@ -158,16 +164,18 @@
                         <Label Text="{helpers:Translate strLogradouro}" Style="{StaticResource AtalhoTexto}" />
                     </VerticalStackLayout>
                 </Grid>
+                </ScrollView>
 
                 <BoxView Style="{StaticResource Separador}" Margin="0,8" />
 
                 <!-- Idioma e atualização -->
-                <Grid ColumnDefinitions="Auto,220,*,Auto" ColumnSpacing="12" Margin="0,0,0,20">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" Margin="0,0,0,20">
                     <Label Grid.Column="0" Text="{helpers:Translate strIdioma}"
                            Style="{StaticResource RotuloSecao}" VerticalOptions="Center" />
                     <Picker Grid.Column="1" ItemsSource="{Binding Idiomas}"
+                            MaximumWidthRequest="240" HorizontalOptions="Start"
                             SelectedItem="{Binding IdiomaSelecionado, Mode=TwoWay}" />
-                    <Button Grid.Column="3" Text="{helpers:Translate strAtualizar}"
+                    <Button Grid.Column="2" Text="{helpers:Translate strAtualizar}"
                             Style="{StaticResource BotaoSecundario}"
                             Padding="18,0"
                             Command="{Binding CarregarResumoCommand}" />

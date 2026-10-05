@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- gabriel geremias vieira -->
+<resources>
+	<color name="colorPrimary">#6D4AFF</color>
+	<color name="colorPrimaryDark">#2B1D63</color>
+	<color name="colorAccent">#FFC107</color>
+</resources>

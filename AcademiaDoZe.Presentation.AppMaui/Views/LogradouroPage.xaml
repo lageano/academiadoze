@@ -7,12 +7,12 @@
              xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
              x:DataType="vm:LogradouroViewModel"
              Title=""
-             Shell.NavBarIsVisible="False"
+             Shell.NavBarIsVisible="{OnPlatform Default=True, WinUI=False}"
              BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource CanvasDark}}">
 
     <Grid RowDefinitions="Auto,1,*,1,Auto">
 
-        <VerticalStackLayout Grid.Row="0" Padding="36,26,36,20" Spacing="3"
+        <VerticalStackLayout Grid.Row="0" Padding="{OnIdiom Phone='20,20,20,16', Default='36,26,36,20'}" Spacing="3"
                              BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
             <Label Text="{Binding Title}" Style="{StaticResource TituloTela}" />
             <Label Text="Endereço base reutilizado por alunos e colaboradores." Style="{StaticResource LinhaApoio}" />
@@ -21,7 +21,7 @@
         <BoxView Grid.Row="1" Style="{StaticResource Separador}" />
 
         <ScrollView Grid.Row="2">
-            <VerticalStackLayout Padding="36,26" Spacing="0" MaximumWidthRequest="760" HorizontalOptions="Start">
+            <VerticalStackLayout Padding="{OnIdiom Phone='20,22', Default='36,26'}" Spacing="0" MaximumWidthRequest="760" HorizontalOptions="Start">
 
                 <Label Text="IDENTIFICAÇÃO" Style="{StaticResource RotuloSecao}" />
 
@@ -71,7 +71,7 @@
         <BoxView Grid.Row="3" Style="{StaticResource Separador}" />
 
         <!-- Barra de ações fixa no rodapé -->
-        <Grid Grid.Row="4" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12" Padding="36,16"
+        <Grid Grid.Row="4" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12" Padding="{OnIdiom Phone='20,12', Default='36,16'}"
               BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
             <Button Grid.Column="1" Text="{helpers:Translate strCancelar}" WidthRequest="130"
                     Style="{StaticResource BotaoSecundario}" Command="{Binding CancelarCommand}" />

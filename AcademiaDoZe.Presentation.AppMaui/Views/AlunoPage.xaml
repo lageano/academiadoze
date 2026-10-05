@@ -8,7 +8,7 @@
              xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
              x:DataType="vm:AlunoViewModel"
              Title=""
-             Shell.NavBarIsVisible="False"
+             Shell.NavBarIsVisible="{OnPlatform Default=True, WinUI=False}"
              BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource CanvasDark}}">
 
     <ContentPage.Resources>
@@ -21,7 +21,7 @@
 
     <Grid RowDefinitions="Auto,1,*,1,Auto">
 
-        <VerticalStackLayout Grid.Row="0" Padding="36,26,36,20" Spacing="3"
+        <VerticalStackLayout Grid.Row="0" Padding="{OnIdiom Phone='20,20,20,16', Default='36,26,36,20'}" Spacing="3"
                              BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
             <Label Text="{Binding Title}" Style="{StaticResource TituloTela}" />
             <Label Text="Dados cadastrais, endereço e credenciais de acesso." Style="{StaticResource LinhaApoio}" />
@@ -30,11 +30,13 @@
         <BoxView Grid.Row="1" Style="{StaticResource Separador}" />
 
         <ScrollView Grid.Row="2">
-            <Grid ColumnDefinitions="*,280" ColumnSpacing="40" Padding="36,26"
+            <Grid ColumnDefinitions="{OnIdiom Phone='*,0', Default='*,280'}" ColumnSpacing="40"
+                  RowDefinitions="{OnIdiom Phone='Auto,Auto', Default='Auto,0'}"
+                  Padding="{OnIdiom Phone='20,22', Default='36,26'}"
                   MaximumWidthRequest="1100" HorizontalOptions="Start">
 
                 <!-- Campos -->
-                <VerticalStackLayout Grid.Column="0" Spacing="0" MaximumWidthRequest="720" HorizontalOptions="Start">
+                <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="0" MaximumWidthRequest="720" HorizontalOptions="Start">
 
                     <Label Text="DADOS PESSOAIS" Style="{StaticResource RotuloSecao}" />
 
@@ -99,7 +101,8 @@
                 </VerticalStackLayout>
 
                 <!-- Coluna da foto -->
-                <VerticalStackLayout Grid.Column="1" Spacing="14">
+                <VerticalStackLayout Grid.Row="{OnIdiom Phone=1, Default=0}" Grid.Column="{OnIdiom Phone=0, Default=1}"
+                                     Margin="{OnIdiom Phone='0,26,0,0', Default=0}" Spacing="14">
                     <Label Text="FOTO" Style="{StaticResource RotuloSecao}" />
 
                     <Grid WidthRequest="150" HeightRequest="150" HorizontalOptions="Start">
@@ -130,7 +133,7 @@
 
         <BoxView Grid.Row="3" Style="{StaticResource Separador}" />
 
-        <Grid Grid.Row="4" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12" Padding="36,16"
+        <Grid Grid.Row="4" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12" Padding="{OnIdiom Phone='20,12', Default='36,16'}"
               BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
             <Button Grid.Column="1" Text="{helpers:Translate strCancelar}" WidthRequest="130"
                     Style="{StaticResource BotaoSecundario}" Command="{Binding CancelarCommand}" />
