@@ -1,6 +1,7 @@
 // gabriel geremias vieira
 using AcademiaDoZe.Application.DependencyInjection;
 using AcademiaDoZe.Application.Mappings;
+using AcademiaDoZe.Presentation.AppMaui.Helpers;
 using AcademiaDoZe.Presentation.AppMaui.Configuration;
 using AcademiaDoZe.Presentation.AppMaui.ViewModels;
 using AcademiaDoZe.Presentation.AppMaui.Views;
@@ -12,6 +13,10 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        // Aplica a cultura salva nas preferências antes de criar a aplicação e os controles.
+        // Sem preferência salva, usa a do sistema operacional e cai para pt-BR.
+        LocalizationManager.Instance.SetCulture(Preferences.Get("Cultura", LocalizationManager.ObterCulturaPadrao()));
+
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -32,6 +37,17 @@ public static class MauiProgram
 
         // Serviços da camada de aplicação e fábricas de repositório
         builder.Services.AddApplicationServices();
+
+        // Gerenciador de idioma disponível para injeção
+        builder.Services.AddSingleton(LocalizationManager.Instance);
+
+#if WINDOWS
+        // Garante que o seletor de data do WinUI use a cultura atual nos nomes de dias e meses
+        Microsoft.Maui.Handlers.DatePickerHandler.Mapper.AppendToMapping("CulturaLanguage", (handler, view) =>
+        {
+            handler.PlatformView.Language = System.Globalization.CultureInfo.CurrentCulture.Name;
+        });
+#endif
 
         RegistrarViewsEViewModels(builder.Services);
 

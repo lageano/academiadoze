@@ -17,11 +17,42 @@ public partial class ConfigPage : ContentPage
         AppDatabaseType.Sqlite
     ];
 
+    // Evita que o Picker dispare a troca de idioma enquanto a tela ainda está carregando
+    private bool _isCarregando = true;
+
     public ConfigPage()
     {
         InitializeComponent();
         CarregarTema();
         CarregarBanco();
+        CarregarCultura();
+        _isCarregando = false;
+    }
+
+    // Seleciona na tela o idioma salvo em Preferences
+    private void CarregarCultura()
+    {
+        CulturaPicker.SelectedIndex = Preferences.Get("Cultura", "pt-BR") switch
+        {
+            "en-US" => 0,
+            "es-ES" => 1,
+            _ => 2
+        };
+    }
+
+    private void OnCulturaSelectedIndexChanged(object? sender, EventArgs e)
+    {
+        if (_isCarregando || CulturaPicker.SelectedIndex < 0) return;
+
+        string selecionada = CulturaPicker.SelectedIndex switch
+        {
+            0 => "en-US",
+            1 => "es-ES",
+            _ => "pt-BR"
+        };
+
+        // Dispara a mensagem; quem aplica a cultura é o App, que está inscrito
+        WeakReferenceMessenger.Default.Send(new CulturaPreferencesUpdatedMessage(selecionada));
     }
 
     // Seleciona na tela o tema salvo em Preferences; sem preferência, usa "system".

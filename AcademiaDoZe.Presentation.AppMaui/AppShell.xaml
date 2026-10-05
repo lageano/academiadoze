@@ -18,7 +18,10 @@
                 </LinearGradientBrush>
             </Grid.Background>
 
-            <VerticalStackLayout Spacing="3" VerticalOptions="End">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" VerticalOptions="End">
+                <Image Grid.Column="0" Source="{helpers:Translate strBandeira}"
+                       WidthRequest="38" HeightRequest="26" VerticalOptions="End" Margin="0,0,0,4" />
+            <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="End">
                 <Label Text="{helpers:Translate strTitulo}"
                        TextColor="White"
                        FontSize="21"
@@ -28,6 +31,7 @@
                        FontSize="11"
                        CharacterSpacing="1.2" />
             </VerticalStackLayout>
+            </Grid>
         </Grid>
     </Shell.FlyoutHeader>
 

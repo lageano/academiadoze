@@ -88,4 +88,7 @@ public class AppResources
     public static string strInformeCaminho => ResourceManager.GetString("strInformeCaminho", resourceCulture);
     public static string strInformeServidor => ResourceManager.GetString("strInformeServidor", resourceCulture);
     public static string strSenha => ResourceManager.GetString("strSenha", resourceCulture);
+    public static string strBandeira => ResourceManager.GetString("strBandeira", resourceCulture);
+    public static string strIdiomaDescricao => ResourceManager.GetString("strIdiomaDescricao", resourceCulture);
+    public static string strSalvarIdioma => ResourceManager.GetString("strSalvarIdioma", resourceCulture);
 }

@@ -36,7 +36,7 @@ public abstract class TestBase
         ConnectionString = DatabaseType switch
         {
             DatabaseType.SqlServer => "Server=localhost;Database=db_academia_do_ze;User Id=gabriel;Password=malucaodo1;TrustServerCertificate=True;Encrypt=True;",
-            DatabaseType.MySql => "Server=localhost;Database=db_academia_do_ze;User Id=coelho;Password=abcBolinhas12345;",
+            DatabaseType.MySql => "Server=localhost;Database=db_academia_do_ze;User Id=gabrielgeremiasvieira;Password=abcBolinhas12345;",
             DatabaseType.Sqlite => CriarConnectionStringSqlite(),
             _ => throw new ArgumentOutOfRangeException(nameof(DatabaseType), DatabaseType, "SGBD não suportado para testes.")
         };

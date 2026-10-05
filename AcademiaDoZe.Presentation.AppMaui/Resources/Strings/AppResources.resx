@@ -198,4 +198,13 @@
   <data name="strSenha" xml:space="preserve">
     <value>SENHA</value>
   </data>
+  <data name="strBandeira" xml:space="preserve">
+    <value>pt_br.png</value>
+  </data>
+  <data name="strIdiomaDescricao" xml:space="preserve">
+    <value>O idioma muda na hora, sem reiniciar o aplicativo.</value>
+  </data>
+  <data name="strSalvarIdioma" xml:space="preserve">
+    <value>Salvar Idioma</value>
+  </data>
 </root>

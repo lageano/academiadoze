@@ -18,7 +18,7 @@ public static class AppSettings
 
     private const AppDatabaseType TipoPadrao = AppDatabaseType.MySql;
     private const string BancoPadrao = "db_academia_do_ze";
-    private const string UsuarioPadrao = "coelho";
+    private const string UsuarioPadrao = "gabrielgeremiasvieira";
     private const string SenhaPadrao = "abcBolinhas12345";
 
     public static AppDatabaseType BancoSelecionado

@@ -198,4 +198,13 @@
   <data name="strSenha" xml:space="preserve">
     <value>CONTRASEÑA</value>
   </data>
+  <data name="strBandeira" xml:space="preserve">
+    <value>es_es.png</value>
+  </data>
+  <data name="strIdiomaDescricao" xml:space="preserve">
+    <value>El idioma cambia al instante, sin reiniciar.</value>
+  </data>
+  <data name="strSalvarIdioma" xml:space="preserve">
+    <value>Guardar Idioma</value>
+  </data>
 </root>

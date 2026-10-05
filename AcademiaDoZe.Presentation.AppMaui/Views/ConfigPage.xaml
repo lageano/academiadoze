@@ -53,6 +53,27 @@
 
                 <BoxView Style="{StaticResource Separador}" Margin="0,30" />
 
+                <!-- ============ IDIOMA / CULTURA ============ -->
+                <Label Text="{helpers:Translate strIdioma}" Style="{StaticResource RotuloSecao}" />
+                <Label Text="{helpers:Translate strIdiomaDescricao}" Style="{StaticResource MetaDado}" Margin="0,4,0,0" />
+
+                <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="14" Margin="0,14,0,0" HorizontalOptions="Start">
+                    <Image Grid.Column="0" Source="{helpers:Translate strBandeira}"
+                           WidthRequest="42" HeightRequest="28" VerticalOptions="Center" />
+                    <Picker Grid.Column="1" x:Name="CulturaPicker" WidthRequest="320"
+                            SelectedIndexChanged="OnCulturaSelectedIndexChanged">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>en-US</x:String>
+                                <x:String>es-ES</x:String>
+                                <x:String>pt-BR</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </Grid>
+
+                <BoxView Style="{StaticResource Separador}" Margin="0,30" />
+
                 <!-- ============ CREDENCIAIS DO BANCO ============ -->
                 <Label Text="{helpers:Translate strCredenciaisBanco}" Style="{StaticResource RotuloSecao}" />
                 <Label Text="{helpers:Translate strCredenciaisBancoDescricao}" Style="{StaticResource MetaDado}" Margin="0,4,0,0" />

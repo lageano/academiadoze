@@ -42,17 +42,19 @@
         <VerticalStackLayout Spacing="0">
 
             <!-- Faixa de abertura com a logo da aplicação -->
-            <Grid HeightRequest="{OnIdiom Phone=130, Default=172}">
+            <!-- O fundo acompanha o preto da logo, para ela não virar um retângulo solto -->
+            <Grid HeightRequest="{OnIdiom Phone=170, Default=232}">
                 <Grid.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="{StaticResource Roxo}" Offset="0.0" />
+                        <GradientStop Color="#141019" Offset="0.0" />
+                        <GradientStop Color="#0A0A0C" Offset="0.55" />
                         <GradientStop Color="{StaticResource RoxoFundo}" Offset="1.0" />
                     </LinearGradientBrush>
                 </Grid.Background>
 
                 <Image Source="logo_academia.png"
                        Aspect="AspectFit"
-                       HeightRequest="{OnIdiom Phone=96, Default=118}"
+                       HeightRequest="{OnIdiom Phone=142, Default=200}"
                        HorizontalOptions="{OnIdiom Phone=Center, Default=Start}"
                        Margin="{OnIdiom Phone='20,0', Default='40,0'}" />
             </Grid>
@@ -169,32 +171,11 @@
 
                 <BoxView Style="{StaticResource Separador}" Margin="0,8" />
 
-                <!-- Preferências: idioma, tema e atualização.
-                     No computador ficam lado a lado; no celular, uma por linha. -->
-                <Grid ColumnSpacing="12" RowSpacing="12" Margin="0,0,0,20"
-                      ColumnDefinitions="{OnIdiom Phone='90,*', Default='Auto,*,Auto,*,Auto'}"
-                      RowDefinitions="{OnIdiom Phone='Auto,Auto,Auto', Default='Auto'}">
-
-                    <Label Grid.Row="0" Grid.Column="0" Text="{helpers:Translate strIdioma}"
-                           Style="{StaticResource RotuloSecao}" VerticalOptions="Center" />
-                    <Picker Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Idiomas}"
-                            MaximumWidthRequest="{OnIdiom Phone=400, Default=220}" HorizontalOptions="Start"
-                            SelectedItem="{Binding IdiomaSelecionado, Mode=TwoWay}" />
-
-                    <Label Grid.Row="{OnIdiom Phone=1, Default=0}" Grid.Column="{OnIdiom Phone=0, Default=2}"
-                           Text="{helpers:Translate strTema}"
-                           Style="{StaticResource RotuloSecao}" VerticalOptions="Center" />
-                    <Picker Grid.Row="{OnIdiom Phone=1, Default=0}" Grid.Column="{OnIdiom Phone=1, Default=3}"
-                            ItemsSource="{Binding Temas}"
-                            MaximumWidthRequest="{OnIdiom Phone=400, Default=180}" HorizontalOptions="Start"
-                            SelectedItem="{Binding TemaSelecionado, Mode=TwoWay}" />
-
-                    <Button Grid.Row="{OnIdiom Phone=2, Default=0}" Grid.Column="{OnIdiom Phone=1, Default=4}"
-                            Text="{helpers:Translate strAtualizar}"
-                            Style="{StaticResource BotaoSecundario}"
-                            Padding="18,0" HorizontalOptions="{OnIdiom Phone=Start, Default=Fill}"
-                            Command="{Binding CarregarResumoCommand}" />
-                </Grid>
+                <!-- Idioma e tema ficam na tela de Configurações -->
+                <Button Text="{helpers:Translate strAtualizar}"
+                        Style="{StaticResource BotaoSecundario}"
+                        Padding="18,0" HorizontalOptions="Start" Margin="0,0,0,20"
+                        Command="{Binding CarregarResumoCommand}" />
 
             </VerticalStackLayout>
 
