@@ -135,4 +135,67 @@
   <data name="strTemaEscuro" xml:space="preserve">
     <value>Oscuro</value>
   </data>
+  <data name="strConfiguracoes" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="strConfiguracoesDescricao" xml:space="preserve">
+    <value>Tema de la interfaz y credenciales de la base de datos.</value>
+  </data>
+  <data name="strVoltar" xml:space="preserve">
+    <value>Volver</value>
+  </data>
+  <data name="strTemaDescricao" xml:space="preserve">
+    <value>Elija claro, oscuro o seguir el sistema.</value>
+  </data>
+  <data name="strSalvarTema" xml:space="preserve">
+    <value>Guardar Tema</value>
+  </data>
+  <data name="strCredenciaisBanco" xml:space="preserve">
+    <value>CREDENCIALES DE LA BASE</value>
+  </data>
+  <data name="strCredenciaisBancoDescricao" xml:space="preserve">
+    <value>Los cambios se aplican de inmediato, sin reiniciar.</value>
+  </data>
+  <data name="strTipoGerenciador" xml:space="preserve">
+    <value>TIPO DE GESTOR</value>
+  </data>
+  <data name="strAvisoSqlite" xml:space="preserve">
+    <value>SQLite es una base local en archivo. No requiere servidor de red, usuario ni contraseña.</value>
+  </data>
+  <data name="strCaminhoBanco" xml:space="preserve">
+    <value>RUTA / ARCHIVO DE LA BASE (.DB)</value>
+  </data>
+  <data name="strServidor" xml:space="preserve">
+    <value>SERVIDOR</value>
+  </data>
+  <data name="strBanco" xml:space="preserve">
+    <value>BASE DE DATOS</value>
+  </data>
+  <data name="strUsuario" xml:space="preserve">
+    <value>USUARIO</value>
+  </data>
+  <data name="strComplemento" xml:space="preserve">
+    <value>COMPLEMENTO (SSL / TIMEOUT / CIFRADO)</value>
+  </data>
+  <data name="strSalvarBanco" xml:space="preserve">
+    <value>Guardar BD</value>
+  </data>
+  <data name="strSucesso" xml:space="preserve">
+    <value>Éxito</value>
+  </data>
+  <data name="strAviso" xml:space="preserve">
+    <value>Aviso</value>
+  </data>
+  <data name="strDadosSalvos" xml:space="preserve">
+    <value>¡Datos guardados con éxito!</value>
+  </data>
+  <data name="strInformeCaminho" xml:space="preserve">
+    <value>Indique la ruta del archivo de la base.</value>
+  </data>
+  <data name="strInformeServidor" xml:space="preserve">
+    <value>Indique al menos el servidor y el nombre de la base.</value>
+  </data>
+  <data name="strSenha" xml:space="preserve">
+    <value>CONTRASEÑA</value>
+  </data>
 </root>

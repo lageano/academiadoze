@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- gabriel geremias vieira -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AcademiaDoZe.Presentation.AppMaui.Views.ConfigPage"
+             xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
+             Title=""
+             Shell.NavBarIsVisible="{OnPlatform Default=True, WinUI=False}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Canvas}, Dark={StaticResource CanvasDark}}">
+
+    <Grid RowDefinitions="Auto,1,*">
+
+        <!-- Cabeçalho -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto"
+              Padding="{OnIdiom Phone='20,20,20,16', Default='36,26,36,20'}"
+              BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
+            <VerticalStackLayout Grid.Column="0" Spacing="3">
+                <Label Text="{helpers:Translate strConfiguracoes}" Style="{StaticResource TituloTela}" />
+                <Label Text="{helpers:Translate strConfiguracoesDescricao}" Style="{StaticResource LinhaApoio}" />
+            </VerticalStackLayout>
+            <Button Grid.Column="1" Text="{helpers:Translate strVoltar}"
+                    Style="{StaticResource BotaoSecundario}" Padding="18,0"
+                    VerticalOptions="Center" Clicked="OnVoltarClicked" />
+        </Grid>
+
+        <BoxView Grid.Row="1" Style="{StaticResource Separador}" />
+
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Padding="{OnIdiom Phone='20,22', Default='36,26'}"
+                                 Spacing="0" MaximumWidthRequest="760" HorizontalOptions="Start">
+
+                <!-- ============ TEMA ============ -->
+                <Label Text="{helpers:Translate strTema}" Style="{StaticResource RotuloSecao}" />
+                <Label Text="{helpers:Translate strTemaDescricao}" Style="{StaticResource MetaDado}" Margin="0,4,0,0" />
+
+                <Label Text="{helpers:Translate strTema}" Style="{StaticResource RotuloCampo}" />
+                <Picker x:Name="TemaPicker" WidthRequest="320" HorizontalOptions="Start">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>light</x:String>
+                            <x:String>dark</x:String>
+                            <x:String>system</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="12" Margin="0,18,0,0" HorizontalOptions="Start">
+                    <Button Grid.Column="0" Text="{helpers:Translate strCancelar}" WidthRequest="150"
+                            Style="{StaticResource BotaoSecundario}" Clicked="OnCancelarClicked" />
+                    <Button Grid.Column="1" Text="{helpers:Translate strSalvarTema}" WidthRequest="170"
+                            Style="{StaticResource BotaoPrimario}" Clicked="OnSalvarTemaClicked" />
+                </Grid>
+
+                <BoxView Style="{StaticResource Separador}" Margin="0,30" />
+
+                <!-- ============ CREDENCIAIS DO BANCO ============ -->
+                <Label Text="{helpers:Translate strCredenciaisBanco}" Style="{StaticResource RotuloSecao}" />
+                <Label Text="{helpers:Translate strCredenciaisBancoDescricao}" Style="{StaticResource MetaDado}" Margin="0,4,0,0" />
+
+                <Label Text="{helpers:Translate strTipoGerenciador}" Style="{StaticResource RotuloCampo}" />
+                <Picker x:Name="BancoPicker" WidthRequest="320" HorizontalOptions="Start"
+                        SelectedIndexChanged="OnTipoBancoChanged" />
+
+                <!-- Aviso exibido somente para SQLite -->
+                <Grid x:Name="AvisoSqlite" ColumnDefinitions="4,*" ColumnSpacing="12" Margin="0,14,0,0" IsVisible="False">
+                    <BoxView Grid.Column="0" Color="{StaticResource Roxo}" VerticalOptions="Fill" />
+                    <Label Grid.Column="1" Style="{StaticResource MetaDado}" Padding="0,4"
+                           Text="{helpers:Translate strAvisoSqlite}" />
+                </Grid>
+
+                <!-- Campos exclusivos do SQLite -->
+                <VerticalStackLayout x:Name="CamposSqlite" Spacing="0" IsVisible="False">
+                    <Label Text="{helpers:Translate strCaminhoBanco}" Style="{StaticResource RotuloCampo}" />
+                    <Entry x:Name="CaminhoEntry" Placeholder="C:\AcademiaDoZe\db_academia_do_ze.db" />
+                </VerticalStackLayout>
+
+                <!-- Campos de servidor, usados por MySQL e SQL Server -->
+                <VerticalStackLayout x:Name="CamposServidor" Spacing="0" IsVisible="False">
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="{helpers:Translate strServidor}" Style="{StaticResource RotuloCampo}" />
+                            <Entry x:Name="ServidorEntry" Placeholder="localhost" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="{helpers:Translate strBanco}" Style="{StaticResource RotuloCampo}" />
+                            <Entry x:Name="BancoEntry" Placeholder="db_academia_do_ze" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="{helpers:Translate strUsuario}" Style="{StaticResource RotuloCampo}" />
+                            <Entry x:Name="UsuarioEntry" Placeholder="usuario" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="{helpers:Translate strSenha}" Style="{StaticResource RotuloCampo}" />
+                            <Entry x:Name="SenhaEntry" IsPassword="True" Placeholder="senha" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <Label Text="{helpers:Translate strComplemento}" Style="{StaticResource RotuloCampo}" />
+                <Entry x:Name="ComplementoEntry" Placeholder="Default Timeout=5;" />
+
+                <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="12" Margin="0,18,0,30" HorizontalOptions="Start">
+                    <Button Grid.Column="0" Text="{helpers:Translate strCancelar}" WidthRequest="150"
+                            Style="{StaticResource BotaoSecundario}" Clicked="OnCancelarClicked" />
+                    <Button Grid.Column="1" Text="{helpers:Translate strSalvarBanco}" WidthRequest="170"
+                            Style="{StaticResource BotaoPrimario}" Clicked="OnSalvarBancoClicked" />
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

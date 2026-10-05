@@ -135,4 +135,67 @@
   <data name="strTemaEscuro" xml:space="preserve">
     <value>Dark</value>
   </data>
+  <data name="strConfiguracoes" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="strConfiguracoesDescricao" xml:space="preserve">
+    <value>Interface theme and database credentials.</value>
+  </data>
+  <data name="strVoltar" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="strTemaDescricao" xml:space="preserve">
+    <value>Choose light, dark or follow the system.</value>
+  </data>
+  <data name="strSalvarTema" xml:space="preserve">
+    <value>Save Theme</value>
+  </data>
+  <data name="strCredenciaisBanco" xml:space="preserve">
+    <value>DATABASE CREDENTIALS</value>
+  </data>
+  <data name="strCredenciaisBancoDescricao" xml:space="preserve">
+    <value>Changes take effect immediately, no restart needed.</value>
+  </data>
+  <data name="strTipoGerenciador" xml:space="preserve">
+    <value>DATABASE ENGINE</value>
+  </data>
+  <data name="strAvisoSqlite" xml:space="preserve">
+    <value>SQLite is a local file-based database. It needs no network server, user or password.</value>
+  </data>
+  <data name="strCaminhoBanco" xml:space="preserve">
+    <value>DATABASE FILE PATH (.DB)</value>
+  </data>
+  <data name="strServidor" xml:space="preserve">
+    <value>SERVER</value>
+  </data>
+  <data name="strBanco" xml:space="preserve">
+    <value>DATABASE</value>
+  </data>
+  <data name="strUsuario" xml:space="preserve">
+    <value>USER</value>
+  </data>
+  <data name="strComplemento" xml:space="preserve">
+    <value>EXTRA (SSL / TIMEOUT / ENCRYPTION)</value>
+  </data>
+  <data name="strSalvarBanco" xml:space="preserve">
+    <value>Save DB</value>
+  </data>
+  <data name="strSucesso" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="strAviso" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="strDadosSalvos" xml:space="preserve">
+    <value>Data saved successfully!</value>
+  </data>
+  <data name="strInformeCaminho" xml:space="preserve">
+    <value>Please enter the database file path.</value>
+  </data>
+  <data name="strInformeServidor" xml:space="preserve">
+    <value>Please enter at least the server and database name.</value>
+  </data>
+  <data name="strSenha" xml:space="preserve">
+    <value>PASSWORD</value>
+  </data>
 </root>

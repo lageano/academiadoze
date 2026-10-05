@@ -67,4 +67,25 @@ public class AppResources
     public static string strTemaSistema => ResourceManager.GetString("strTemaSistema", resourceCulture);
     public static string strTemaClaro => ResourceManager.GetString("strTemaClaro", resourceCulture);
     public static string strTemaEscuro => ResourceManager.GetString("strTemaEscuro", resourceCulture);
+    public static string strConfiguracoes => ResourceManager.GetString("strConfiguracoes", resourceCulture);
+    public static string strConfiguracoesDescricao => ResourceManager.GetString("strConfiguracoesDescricao", resourceCulture);
+    public static string strVoltar => ResourceManager.GetString("strVoltar", resourceCulture);
+    public static string strTemaDescricao => ResourceManager.GetString("strTemaDescricao", resourceCulture);
+    public static string strSalvarTema => ResourceManager.GetString("strSalvarTema", resourceCulture);
+    public static string strCredenciaisBanco => ResourceManager.GetString("strCredenciaisBanco", resourceCulture);
+    public static string strCredenciaisBancoDescricao => ResourceManager.GetString("strCredenciaisBancoDescricao", resourceCulture);
+    public static string strTipoGerenciador => ResourceManager.GetString("strTipoGerenciador", resourceCulture);
+    public static string strAvisoSqlite => ResourceManager.GetString("strAvisoSqlite", resourceCulture);
+    public static string strCaminhoBanco => ResourceManager.GetString("strCaminhoBanco", resourceCulture);
+    public static string strServidor => ResourceManager.GetString("strServidor", resourceCulture);
+    public static string strBanco => ResourceManager.GetString("strBanco", resourceCulture);
+    public static string strUsuario => ResourceManager.GetString("strUsuario", resourceCulture);
+    public static string strComplemento => ResourceManager.GetString("strComplemento", resourceCulture);
+    public static string strSalvarBanco => ResourceManager.GetString("strSalvarBanco", resourceCulture);
+    public static string strSucesso => ResourceManager.GetString("strSucesso", resourceCulture);
+    public static string strAviso => ResourceManager.GetString("strAviso", resourceCulture);
+    public static string strDadosSalvos => ResourceManager.GetString("strDadosSalvos", resourceCulture);
+    public static string strInformeCaminho => ResourceManager.GetString("strInformeCaminho", resourceCulture);
+    public static string strInformeServidor => ResourceManager.GetString("strInformeServidor", resourceCulture);
+    public static string strSenha => ResourceManager.GetString("strSenha", resourceCulture);
 }

@@ -22,11 +22,16 @@
 
     <Grid RowDefinitions="Auto,1,*,1,Auto">
 
-        <VerticalStackLayout Grid.Row="0" Padding="{OnIdiom Phone='20,20,20,16', Default='36,26,36,20'}" Spacing="3"
-                             BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
-            <Label Text="{Binding Title}" Style="{StaticResource TituloTela}" />
-            <Label Text="Dados cadastrais, endereço e credenciais de acesso." Style="{StaticResource LinhaApoio}" />
-        </VerticalStackLayout>
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Padding="{OnIdiom Phone='20,20,20,16', Default='36,26,36,20'}"
+              BackgroundColor="{AppThemeBinding Light={StaticResource Panel}, Dark={StaticResource PanelDark}}">
+            <VerticalStackLayout Grid.Column="0" Spacing="3">
+                <Label Text="{Binding Title}" Style="{StaticResource TituloTela}" />
+                <Label Text="Dados cadastrais, endereço e credenciais de acesso." Style="{StaticResource LinhaApoio}" />
+            </VerticalStackLayout>
+            <Button Grid.Column="1" Text="{helpers:Translate strVoltar}"
+                    Style="{StaticResource BotaoSecundario}" Padding="18,0"
+                    VerticalOptions="Center" Command="{Binding CancelarCommand}" />
+        </Grid>
 
         <BoxView Grid.Row="1" Style="{StaticResource Separador}" />
 

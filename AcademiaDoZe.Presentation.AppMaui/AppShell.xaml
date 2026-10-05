@@ -55,4 +55,8 @@
         <ShellContent ContentTemplate="{DataTemplate views:LogradouroListPage}" />
     </FlyoutItem>
 
+    <FlyoutItem Title="{helpers:Translate strConfiguracoes}" Route="configuracoes">
+        <ShellContent ContentTemplate="{DataTemplate views:ConfigPage}" />
+    </FlyoutItem>
+
 </Shell>

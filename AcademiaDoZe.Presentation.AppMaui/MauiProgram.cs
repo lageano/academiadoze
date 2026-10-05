@@ -1,5 +1,6 @@
 // gabriel geremias vieira
 using AcademiaDoZe.Application.DependencyInjection;
+using AcademiaDoZe.Application.Mappings;
 using AcademiaDoZe.Presentation.AppMaui.Configuration;
 using AcademiaDoZe.Presentation.AppMaui.ViewModels;
 using AcademiaDoZe.Presentation.AppMaui.Views;
@@ -20,11 +21,13 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        // Configuração de acesso a dados consumida pelas fábricas de repositório
+        // Configuração de acesso a dados consumida pelas fábricas de repositório.
+        // É a mesma instância durante toda a execução: a tela de Configurações altera
+        // as propriedades dela e os repositórios criados a seguir já usam os novos valores.
         builder.Services.AddSingleton(new RepositoryConfig
         {
             ConnectionString = AppSettings.ConnectionString,
-            DatabaseType = AppSettings.BancoSelecionado
+            DatabaseType = AppSettings.BancoSelecionado.ToInfrastructure()
         });
 
         // Serviços da camada de aplicação e fábricas de repositório
@@ -68,5 +71,7 @@ public static class MauiProgram
 
         services.AddTransient<AcessoPage>();
         services.AddTransient<AcessoViewModel>();
+
+        services.AddTransient<ConfigPage>();
     }
 }
