@@ -162,6 +162,27 @@
     <Style TargetType="Entry">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#F1EEFA, Dark=#15131F}" />
+    </Style>
+
+    <!-- Sem esse fundo o Picker fica sem contorno visível no tema claro -->
+    <Style TargetType="Picker">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}" />
+        <Setter Property="TitleColor" Value="{AppThemeBinding Light={StaticResource InkSoft}, Dark={StaticResource Gray400}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#F1EEFA, Dark=#15131F}" />
+    </Style>
+
+    <Style TargetType="DatePicker">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#F1EEFA, Dark=#15131F}" />
+    </Style>
+
+    <Style TargetType="Editor">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Ink}, Dark={StaticResource White}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#F1EEFA, Dark=#15131F}" />
     </Style>
 
     <!-- Barra do Shell discreta: cada tela ja tem o proprio cabecalho -->

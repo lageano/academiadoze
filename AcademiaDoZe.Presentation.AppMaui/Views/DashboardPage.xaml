@@ -89,7 +89,8 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="{Binding TotalMatriculasAtivas}" FontSize="44" />
-                                <Span Text=" ativas" FontSize="15" />
+                                <Span Text=" " FontSize="15" />
+                                <Span Text="{helpers:Translate strAtivas}" FontSize="15" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -168,16 +169,30 @@
 
                 <BoxView Style="{StaticResource Separador}" Margin="0,8" />
 
-                <!-- Idioma e atualização -->
-                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" Margin="0,0,0,20">
-                    <Label Grid.Column="0" Text="{helpers:Translate strIdioma}"
+                <!-- Preferências: idioma, tema e atualização.
+                     No computador ficam lado a lado; no celular, uma por linha. -->
+                <Grid ColumnSpacing="12" RowSpacing="12" Margin="0,0,0,20"
+                      ColumnDefinitions="{OnIdiom Phone='90,*', Default='Auto,*,Auto,*,Auto'}"
+                      RowDefinitions="{OnIdiom Phone='Auto,Auto,Auto', Default='Auto'}">
+
+                    <Label Grid.Row="0" Grid.Column="0" Text="{helpers:Translate strIdioma}"
                            Style="{StaticResource RotuloSecao}" VerticalOptions="Center" />
-                    <Picker Grid.Column="1" ItemsSource="{Binding Idiomas}"
-                            MaximumWidthRequest="240" HorizontalOptions="Start"
+                    <Picker Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Idiomas}"
+                            MaximumWidthRequest="{OnIdiom Phone=400, Default=220}" HorizontalOptions="Start"
                             SelectedItem="{Binding IdiomaSelecionado, Mode=TwoWay}" />
-                    <Button Grid.Column="2" Text="{helpers:Translate strAtualizar}"
+
+                    <Label Grid.Row="{OnIdiom Phone=1, Default=0}" Grid.Column="{OnIdiom Phone=0, Default=2}"
+                           Text="{helpers:Translate strTema}"
+                           Style="{StaticResource RotuloSecao}" VerticalOptions="Center" />
+                    <Picker Grid.Row="{OnIdiom Phone=1, Default=0}" Grid.Column="{OnIdiom Phone=1, Default=3}"
+                            ItemsSource="{Binding Temas}"
+                            MaximumWidthRequest="{OnIdiom Phone=400, Default=180}" HorizontalOptions="Start"
+                            SelectedItem="{Binding TemaSelecionado, Mode=TwoWay}" />
+
+                    <Button Grid.Row="{OnIdiom Phone=2, Default=0}" Grid.Column="{OnIdiom Phone=1, Default=4}"
+                            Text="{helpers:Translate strAtualizar}"
                             Style="{StaticResource BotaoSecundario}"
-                            Padding="18,0"
+                            Padding="18,0" HorizontalOptions="{OnIdiom Phone=Start, Default=Fill}"
                             Command="{Binding CarregarResumoCommand}" />
                 </Grid>
 

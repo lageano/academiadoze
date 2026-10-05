@@ -120,4 +120,19 @@
   <data name="strTotalRegistros" xml:space="preserve">
     <value>Total de registros</value>
   </data>
+  <data name="strAtivas" xml:space="preserve">
+    <value>ativas</value>
+  </data>
+  <data name="strTema" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="strTemaSistema" xml:space="preserve">
+    <value>Sistema</value>
+  </data>
+  <data name="strTemaClaro" xml:space="preserve">
+    <value>Claro</value>
+  </data>
+  <data name="strTemaEscuro" xml:space="preserve">
+    <value>Escuro</value>
+  </data>
 </root>

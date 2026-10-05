@@ -62,4 +62,9 @@ public class AppResources
     public static string strBuscar => ResourceManager.GetString("strBuscar", resourceCulture);
     public static string strAtualizar => ResourceManager.GetString("strAtualizar", resourceCulture);
     public static string strTotalRegistros => ResourceManager.GetString("strTotalRegistros", resourceCulture);
+    public static string strAtivas => ResourceManager.GetString("strAtivas", resourceCulture);
+    public static string strTema => ResourceManager.GetString("strTema", resourceCulture);
+    public static string strTemaSistema => ResourceManager.GetString("strTemaSistema", resourceCulture);
+    public static string strTemaClaro => ResourceManager.GetString("strTemaClaro", resourceCulture);
+    public static string strTemaEscuro => ResourceManager.GetString("strTemaEscuro", resourceCulture);
 }
