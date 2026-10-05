@@ -3,12 +3,53 @@
     x:Class="AcademiaDoZe.Presentation.AppMaui.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:AcademiaDoZe.Presentation.AppMaui"
-    Title="AcademiaDoZe.Presentation.AppMaui">
+    xmlns:views="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Views"
+    xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
+    Title="{helpers:Translate strTitulo}"
+    FlyoutBehavior="Flyout"
+    FlyoutWidth="260">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <Shell.FlyoutHeader>
+        <Grid BackgroundColor="{StaticResource Primary}" HeightRequest="150" Padding="20,24">
+            <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                <Image Source="logo_academia.png"
+                       HeightRequest="56"
+                       HorizontalOptions="Start"
+                       Aspect="AspectFit" />
+                <Label Text="{helpers:Translate strTitulo}"
+                       TextColor="White"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       Margin="0,8,0,0" />
+                <Label Text="{helpers:Translate strSubTitulo}"
+                       TextColor="#E4DCFB"
+                       FontSize="12" />
+            </VerticalStackLayout>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <FlyoutItem Title="{helpers:Translate strDashboard}" Route="dashboard">
+        <ShellContent ContentTemplate="{DataTemplate views:DashboardPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="{helpers:Translate strAcesso}" Route="acesso">
+        <ShellContent ContentTemplate="{DataTemplate views:AcessoPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="{helpers:Translate strAluno}" Route="alunos">
+        <ShellContent ContentTemplate="{DataTemplate views:AlunoListPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="{helpers:Translate strColaborador}" Route="colaboradores">
+        <ShellContent ContentTemplate="{DataTemplate views:ColaboradorListPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="{helpers:Translate strMatricula}" Route="matriculas">
+        <ShellContent ContentTemplate="{DataTemplate views:MatriculaListPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="{helpers:Translate strLogradouro}" Route="logradouros">
+        <ShellContent ContentTemplate="{DataTemplate views:LogradouroListPage}" />
+    </FlyoutItem>
 
 </Shell>

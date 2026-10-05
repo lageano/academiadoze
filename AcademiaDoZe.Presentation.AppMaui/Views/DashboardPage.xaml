@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- gabriel geremias vieira -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AcademiaDoZe.Presentation.AppMaui.Views.DashboardPage"
+             xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+             xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
+             x:DataType="vm:DashboardViewModel"
+             Title="{helpers:Translate strDashboard}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="18" MaximumWidthRequest="1100">
+
+            <!-- Logo da aplicação, contendo o nome do autor -->
+            <Border Style="{StaticResource CardBorder}" Padding="0">
+                <Image Source="logo_academia.png"
+                       Aspect="AspectFit"
+                       HeightRequest="190"
+                       HorizontalOptions="Fill" />
+            </Border>
+
+            <Label Text="{helpers:Translate strBemVindo}" Style="{StaticResource SectionTitle}" />
+            <Label Text="{helpers:Translate strDashboardDescricao}" Style="{StaticResource SectionSubtitle}" />
+
+            <!-- Resumo numérico -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="14">
+                <Border Grid.Column="0" Style="{StaticResource CardBorder}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding TotalAlunos}" FontSize="32" FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource AccentYellow}}" />
+                        <Label Text="{helpers:Translate strAluno}" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="1" Style="{StaticResource CardBorder}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding TotalColaboradores}" FontSize="32" FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource AccentYellow}}" />
+                        <Label Text="{helpers:Translate strColaborador}" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="2" Style="{StaticResource CardBorder}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding TotalMatriculasAtivas}" FontSize="32" FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource AccentYellow}}" />
+                        <Label Text="{helpers:Translate strMatricula}" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Atalhos para os módulos -->
+            <Border Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="{helpers:Translate strDashboard}" FontAttributes="Bold" FontSize="15" />
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                        <Button Grid.Row="0" Grid.Column="0" Text="{helpers:Translate strAcesso}"
+                                Style="{StaticResource PrimaryPillButton}"
+                                Command="{Binding NavegarCommand}" CommandParameter="acesso" />
+                        <Button Grid.Row="0" Grid.Column="1" Text="{helpers:Translate strAluno}"
+                                Style="{StaticResource GhostPillButton}"
+                                Command="{Binding NavegarCommand}" CommandParameter="alunos" />
+                        <Button Grid.Row="1" Grid.Column="0" Text="{helpers:Translate strColaborador}"
+                                Style="{StaticResource GhostPillButton}"
+                                Command="{Binding NavegarCommand}" CommandParameter="colaboradores" />
+                        <Button Grid.Row="1" Grid.Column="1" Text="{helpers:Translate strMatricula}"
+                                Style="{StaticResource GhostPillButton}"
+                                Command="{Binding NavegarCommand}" CommandParameter="matriculas" />
+                        <Button Grid.Row="2" Grid.Column="0" Text="{helpers:Translate strLogradouro}"
+                                Style="{StaticResource GhostPillButton}"
+                                Command="{Binding NavegarCommand}" CommandParameter="logradouros" />
+                        <Button Grid.Row="2" Grid.Column="1" Text="{helpers:Translate strAtualizar}"
+                                Style="{StaticResource GhostPillButton}"
+                                Command="{Binding CarregarResumoCommand}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Troca de idioma em tempo de execução (i18n) -->
+            <Border Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="{helpers:Translate strIdioma}" FontAttributes="Bold" FontSize="15" />
+                    <Picker ItemsSource="{Binding Idiomas}"
+                            SelectedItem="{Binding IdiomaSelecionado, Mode=TwoWay}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

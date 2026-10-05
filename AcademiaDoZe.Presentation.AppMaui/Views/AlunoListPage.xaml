@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- gabriel geremias vieira -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AcademiaDoZe.Presentation.AppMaui.Views.AlunoListPage"
+             x:Name="PaginaAlunos"
+             xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+             xmlns:dto="clr-namespace:AcademiaDoZe.Application.DTOs;assembly=AcademiaDoZe.Application"
+             xmlns:converters="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Converters"
+             xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
+             x:DataType="vm:AlunoListViewModel"
+             Title="{helpers:Translate strAluno}">
+
+    <ContentPage.Resources>
+        <converters:FotoToImageSourceConverter x:Key="FotoToImageSource" />
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0" ColumnDefinitions="140,*" ColumnSpacing="10" Padding="16,14">
+            <Picker Grid.Column="0" ItemsSource="{Binding TiposFiltro}" SelectedItem="{Binding FiltroSelecionado}" />
+            <SearchBar Grid.Column="1" Placeholder="Digite o valor..."
+                       Text="{Binding TextoBusca}" SearchCommand="{Binding BuscarCommand}" />
+        </Grid>
+
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding AtualizarCommand}">
+            <CollectionView ItemsSource="{Binding Alunos}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="12" VerticalItemSpacing="12" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.EmptyView>
+                    <Label Text="Nenhum aluno encontrado." HorizontalOptions="Center" Margin="0,40"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="dto:AlunoDto">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Editar" BackgroundColor="{StaticResource Primary}"
+                                               Command="{Binding BindingContext.EditarCommand, Source={x:Reference PaginaAlunos}}"
+                                               CommandParameter="{Binding .}" />
+                                    <SwipeItem Text="Excluir" BackgroundColor="{StaticResource DangerColor}"
+                                               Command="{Binding BindingContext.ExcluirCommand, Source={x:Reference PaginaAlunos}}"
+                                               CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Border Style="{StaticResource CardBorder}" Margin="16,0">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="3">
+                                        <Label Text="{Binding Nome}" FontAttributes="Bold" FontSize="15" LineBreakMode="TailTruncation" />
+
+                                        <Label FontSize="11" LineBreakMode="TailTruncation"
+                                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="CPF: " FontAttributes="Bold" />
+                                                    <Span Text="{Binding Cpf}" />
+                                                    <Span Text="  •  Nasc: " />
+                                                    <Span Text="{Binding DataNascimento, StringFormat='{0:dd/MM/yyyy}'}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+
+                                        <Label Text="{Binding Email}" FontSize="11" LineBreakMode="TailTruncation"
+                                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                                        <Label Text="{Binding Telefone}" FontSize="11"
+                                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+
+                                        <Button Text="{helpers:Translate strEditar}"
+                                                Style="{StaticResource GhostPillButton}"
+                                                HeightRequest="34" FontSize="11" Margin="0,6,0,0"
+                                                Command="{Binding BindingContext.EditarCommand, Source={x:Reference PaginaAlunos}}"
+                                                CommandParameter="{Binding .}" />
+                                    </VerticalStackLayout>
+
+                                    <Border Grid.Column="1" WidthRequest="60" HeightRequest="60"
+                                            StrokeThickness="0" VerticalOptions="Start">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="30" />
+                                        </Border.StrokeShape>
+                                        <Image Source="{Binding Foto, Converter={StaticResource FotoToImageSource}}"
+                                               Aspect="AspectFill" WidthRequest="60" HeightRequest="60" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <Button Grid.Row="1" Text="+" Style="{StaticResource FabButton}" Command="{Binding AdicionarCommand}" />
+
+        <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" VerticalOptions="Center" />
+    </Grid>
+</ContentPage>

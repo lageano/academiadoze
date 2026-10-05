@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- gabriel geremias vieira -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AcademiaDoZe.Presentation.AppMaui.Views.LogradouroPage"
+             xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+             xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
+             x:DataType="vm:LogradouroViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12" MaximumWidthRequest="800">
+
+            <Label Text="Dados do Logradouro" Style="{StaticResource SectionTitle}" />
+
+            <Border Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="2">
+
+                    <Label Text="CEP" Style="{StaticResource FieldLabel}" />
+                    <Entry Text="{Binding Logradouro.Cep}" Placeholder="Somente números" Keyboard="Numeric" MaxLength="9" />
+
+                    <Label Text="Nome do Logradouro" Style="{StaticResource FieldLabel}" />
+                    <Entry Text="{Binding Logradouro.Nome}" Placeholder="Rua, Avenida, Travessa..." />
+
+                    <Label Text="Bairro" Style="{StaticResource FieldLabel}" />
+                    <Entry Text="{Binding Logradouro.Bairro}" Placeholder="Bairro" />
+
+                    <Grid ColumnDefinitions="*,120" ColumnSpacing="10">
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="Cidade" Style="{StaticResource FieldLabel}" />
+                            <Entry Text="{Binding Logradouro.Cidade}" Placeholder="Cidade" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="Estado" Style="{StaticResource FieldLabel}" />
+                            <Entry Text="{Binding Logradouro.Estado}" Placeholder="UF" MaxLength="2" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <Label Text="País" Style="{StaticResource FieldLabel}" />
+                    <Entry Text="{Binding Logradouro.Pais}" Placeholder="País" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8">
+                <Button Grid.Column="0" Text="{helpers:Translate strCancelar}"
+                        Style="{StaticResource GhostPillButton}"
+                        Command="{Binding CancelarCommand}" />
+                <Button Grid.Column="1" Text="{helpers:Translate strSalvar}"
+                        Style="{StaticResource PrimaryPillButton}"
+                        IsEnabled="{Binding IsNotBusy}"
+                        Command="{Binding SalvarCommand}" />
+            </Grid>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- gabriel geremias vieira -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AcademiaDoZe.Presentation.AppMaui.Views.LogradouroListPage"
+             x:Name="PaginaLogradouros"
+             xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+             xmlns:dto="clr-namespace:AcademiaDoZe.Application.DTOs;assembly=AcademiaDoZe.Application"
+             xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
+             x:DataType="vm:LogradouroListViewModel"
+             Title="{helpers:Translate strLogradouro}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Barra de filtro e busca -->
+        <Grid Grid.Row="0" ColumnDefinitions="140,*" ColumnSpacing="10" Padding="16,14">
+            <Picker Grid.Column="0"
+                    ItemsSource="{Binding TiposFiltro}"
+                    SelectedItem="{Binding FiltroSelecionado}" />
+            <SearchBar Grid.Column="1"
+                       Placeholder="Digite o valor..."
+                       Text="{Binding TextoBusca}"
+                       SearchCommand="{Binding BuscarCommand}" />
+        </Grid>
+
+        <!-- Lista de logradouros -->
+        <RefreshView Grid.Row="1"
+                     IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding AtualizarCommand}">
+            <CollectionView ItemsSource="{Binding Logradouros}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="12" VerticalItemSpacing="12" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.EmptyView>
+                    <Label Text="Nenhum logradouro encontrado."
+                           HorizontalOptions="Center"
+                           Margin="0,40"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="dto:LogradouroDto">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Editar" BackgroundColor="{StaticResource Primary}"
+                                               Command="{Binding BindingContext.EditarCommand, Source={x:Reference PaginaLogradouros}}"
+                                               CommandParameter="{Binding .}" />
+                                    <SwipeItem Text="Excluir" BackgroundColor="{StaticResource DangerColor}"
+                                               Command="{Binding BindingContext.ExcluirCommand, Source={x:Reference PaginaLogradouros}}"
+                                               CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Border Style="{StaticResource CardBorder}" Margin="16,0">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="{Binding Nome}" FontAttributes="Bold" FontSize="15" LineBreakMode="TailTruncation" />
+
+                                    <Border Style="{StaticResource BadgeBorder}">
+                                        <Label Text="{Binding Cep}" Style="{StaticResource BadgeLabel}" />
+                                    </Border>
+
+                                    <Label FontSize="12" LineBreakMode="TailTruncation"
+                                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Bairro}" />
+                                                <Span Text=" • " />
+                                                <Span Text="{Binding Cidade}" />
+                                                <Span Text="/" />
+                                                <Span Text="{Binding Estado}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label Text="{Binding Pais}" FontSize="11"
+                                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+
+                                    <Button Text="{helpers:Translate strEditar}"
+                                            Style="{StaticResource GhostPillButton}"
+                                            HeightRequest="34" FontSize="11" Margin="0,6,0,0"
+                                            Command="{Binding BindingContext.EditarCommand, Source={x:Reference PaginaLogradouros}}"
+                                            CommandParameter="{Binding .}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Botão flutuante de inclusão -->
+        <Button Grid.Row="1" Text="+"
+                Style="{StaticResource FabButton}"
+                Command="{Binding AdicionarCommand}" />
+
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           VerticalOptions="Center" />
+    </Grid>
+</ContentPage>
