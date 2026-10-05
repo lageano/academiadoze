@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
              xmlns:converters="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Converters"
              xmlns:helpers="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Helpers"
+             xmlns:dto="clr-namespace:AcademiaDoZe.Application.DTOs;assembly=AcademiaDoZe.Application"
              x:DataType="vm:ColaboradorViewModel"
              Title=""
              Shell.NavBarIsVisible="{OnPlatform Default=True, WinUI=False}"
@@ -92,7 +93,7 @@
                     <Label Text="ENDEREÇO" Style="{StaticResource RotuloSecao}" />
 
                     <Label Text="LOGRADOURO" Style="{StaticResource RotuloCampo}" />
-                    <Picker ItemsSource="{Binding Logradouros}" ItemDisplayBinding="{Binding Nome}"
+                    <Picker ItemsSource="{Binding Logradouros}" ItemDisplayBinding="{Binding Nome, x:DataType=dto:LogradouroDto}"
                             SelectedItem="{Binding LogradouroSelecionado, Mode=TwoWay}"
                             Title="Selecione o logradouro..." />
 

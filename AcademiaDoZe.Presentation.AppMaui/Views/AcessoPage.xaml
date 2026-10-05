@@ -72,7 +72,7 @@
                                 WidthRequest="110" Command="{Binding BuscarPessoasCommand}" />
                     </Grid>
                     <Label Text="{Binding RotuloSelecao}" Style="{StaticResource RotuloCampo}" Margin="0,6,0,2" />
-                    <Picker ItemsSource="{Binding Pessoas}" ItemDisplayBinding="{Binding Nome}"
+                    <Picker ItemsSource="{Binding Pessoas}" ItemDisplayBinding="{Binding Nome, x:DataType=vm:PessoaAcessoItem}"
                             SelectedItem="{Binding PessoaSelecionada, Mode=TwoWay}"
                             Title="Toque para escolher..." />
                 </VerticalStackLayout>

@@ -4,19 +4,18 @@ using AcademiaDoZe.Infrastructure.Data;
 namespace AcademiaDoZe.Presentation.AppMaui.Configuration;
 
 // Centraliza a escolha do SGBD e a string de conexão usada pela aplicação.
-// No Windows o app fala com o MySQL da máquina; no Android, onde não existe
-// um servidor local, ele usa SQLite e o DbInitializer cria o banco no primeiro uso.
+// Windows e Android usam o mesmo banco MySQL, para que os dois mostrem os mesmos dados.
+// No Android "localhost" seria o proprio celular, entao o servidor e o IP do
+// computador na rede local; os dois precisam estar no mesmo Wi-Fi.
 public static class AppSettings
 {
-#if ANDROID
-    public const DatabaseType BancoSelecionado = DatabaseType.Sqlite;
-#else
     public const DatabaseType BancoSelecionado = DatabaseType.MySql;
-#endif
 
-    // Trocar por "192.168.x.x" (IP da máquina na rede) caso o celular precise
-    // acessar o MySQL do computador em vez do SQLite local.
+#if ANDROID
+    private const string Servidor = "192.168.0.8";
+#else
     private const string Servidor = "localhost";
+#endif
 
     public static string ConnectionString => BancoSelecionado switch
     {
